@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
-import { CustomerListResults } from '../components/customer/customer-list-results';
-import { CustomerListToolbar } from '../components/customer/customer-list-toolbar';
+import { CustomerListResults } from '../components/history_request/history_request-list-results';
+import { CustomerListToolbar } from '../components/history_request/history_request-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { customers } from '../__mocks__/customers';
 
@@ -9,7 +9,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Customers | Material Kit
+        ASIST | ИСТОРИЯ ЗАПРОСОВ
       </title>
     </Head>
     <Box

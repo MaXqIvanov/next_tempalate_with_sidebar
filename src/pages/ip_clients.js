@@ -8,7 +8,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Account | Material Kit
+        ASIST | IP-Клиенты
       </title>
     </Head>
     <Box

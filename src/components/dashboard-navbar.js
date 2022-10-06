@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from '@mui/material';
+import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip, TextField} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Bell as BellIcon } from '../icons/bell';
 import { UserCircle as UserCircleIcon } from '../icons/user-circle';
 import { Users as UsersIcon } from '../icons/users';
 import { AccountPopover } from './account-popover';
+import not_user_img from '../icons/header/user.svg';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -50,13 +51,15 @@ export const DashboardNavbar = (props) => {
           >
             <MenuIcon fontSize="small" />
           </IconButton>
-          <Tooltip title="Search">
+          {/* <Tooltip title="Search" className={`dashboard-navbar-group-btn`}>
             <IconButton sx={{ ml: 1 }}>
-              <SearchIcon fontSize="small" />
+              <SearchIcon fontSize="medium" />
+              <TextField className={`current_task_field`} id="standard-basic" label="поиск" variant="standard" />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
           <Box sx={{ flexGrow: 1 }} />
-          <Tooltip title="Contacts">
+          
+          {/* <Tooltip title="Contacts">
             <IconButton sx={{ ml: 1 }}>
               <UsersIcon fontSize="small" />
             </IconButton>
@@ -71,7 +74,7 @@ export const DashboardNavbar = (props) => {
                 <BellIcon fontSize="small" />
               </Badge>
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
           <Avatar
             onClick={() => setOpenAccountPopover(true)}
             ref={settingsRef}
@@ -81,7 +84,8 @@ export const DashboardNavbar = (props) => {
               width: 40,
               ml: 1
             }}
-            src="/static/images/avatars/avatar_1.png"
+            // src="/static/images/avatars/avatar_1.png"
+            src={`${not_user_img}`}
           >
             <UserCircleIcon fontSize="small" />
           </Avatar>

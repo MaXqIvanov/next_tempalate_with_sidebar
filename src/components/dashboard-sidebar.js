@@ -20,43 +20,38 @@ const items = [
   {
     href: '/',
     icon: (<ChartBarIcon fontSize="small" />),
-    title: 'Dashboard'
+    title: 'Номенклатура'
   },
   {
-    href: '/customers',
+    href: '/history_request',
     icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers'
+    title: 'История запросов'
   },
   {
-    href: '/products',
-    icon: (<ShoppingBagIcon fontSize="small" />),
-    title: 'Products'
-  },
-  {
-    href: '/account',
-    icon: (<UserIcon fontSize="small" />),
-    title: 'Account'
-  },
-  {
-    href: '/settings',
+    href: '/learn',
     icon: (<CogIcon fontSize="small" />),
-    title: 'Settings'
+    title: 'Обучение'
+  },
+  {
+    href: '/ip_clients',
+    icon: (<SelectorIcon fontSize="small" />),
+    title: 'IP-клиенты'
+  },
+  {
+    href: '/users',
+    icon: (<UserIcon fontSize="small" />),
+    title: 'Пользователи'
   },
   {
     href: '/login',
     icon: (<LockIcon fontSize="small" />),
-    title: 'Login'
+    title: 'Авторизация'
   },
   {
     href: '/register',
     icon: (<UserAddIcon fontSize="small" />),
-    title: 'Register'
+    title: 'Регистрация'
   },
-  {
-    href: '/404',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: 'Error'
-  }
 ];
 
 export const DashboardSidebar = (props) => {
@@ -96,17 +91,18 @@ export const DashboardSidebar = (props) => {
               href="/"
               passHref
             >
-              <a>
+              <a className={`logo_main`}>
                 <Logo
                   sx={{
                     height: 42,
                     width: 42
                   }}
                 />
+                <div className={`logo_title`}>ASIST<span>ADMIN</span></div>
               </a>
             </NextLink>
           </Box>
-          <Box sx={{ px: 2 }}>
+          {/* <Box sx={{ px: 2 }}>
             <Box
               sx={{
                 alignItems: 'center',
@@ -143,7 +139,7 @@ export const DashboardSidebar = (props) => {
                 }}
               />
             </Box>
-          </Box>
+          </Box> */}
         </div>
         <Divider
           sx={{
@@ -168,7 +164,7 @@ export const DashboardSidebar = (props) => {
             py: 3
           }}
         >
-          <Typography
+          {/* <Typography
             color="neutral.100"
             variant="subtitle2"
           >
@@ -179,8 +175,8 @@ export const DashboardSidebar = (props) => {
             variant="body2"
           >
             Check out our Pro solution template.
-          </Typography>
-          <Box
+          </Typography> */}
+          {/* <Box
             sx={{
               display: 'flex',
               mt: 2,
@@ -195,8 +191,8 @@ export const DashboardSidebar = (props) => {
               alt="Go to pro"
               src="/static/images/sidebar_pro.png"
             />
-          </Box>
-          <NextLink
+          </Box> */}
+          {/* <NextLink
             href="https://material-kit-pro-react.devias.io/"
             passHref
           >
@@ -210,7 +206,7 @@ export const DashboardSidebar = (props) => {
             >
               Pro Live Preview
             </Button>
-          </NextLink>
+          </NextLink> */}
         </Box>
       </Box>
     </>

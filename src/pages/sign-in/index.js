@@ -26,29 +26,8 @@ const Page = () => {
         .required('Email is required')
     }),
     onSubmit: async (values, helpers) => {
-      if (!ENABLE_AUTH) {
-        helpers.setFieldError('submit', 'Zalter authentication not enabled');
-        helpers.setSubmitting(false);
-        return;
-      }
-
-      try {
-        // When in development, this will be 'http://localhost:3000/sign-in/confirm'
-        // Remember to configure it in your project settings
-        const redirectUri = window.location.href + '/confirm';
-
-        // This can be call inside AuthProvider component, but we do it here for simplicity
-        await auth.signInWithLink('start', {
-          email: values.email,
-          redirectUri
-        });
-        helpers.setSubmitting(false);
-        setEmailSent(true);
-      } catch (err) {
-        console.error(err);
-        helpers.setFieldError('submit', err.message || 'Something went wrong');
-        helpers.setSubmitting(false);
-      }
+      alert("Запрос на сервер")
+        
     }
   });
 
@@ -95,7 +74,7 @@ const Page = () => {
           <Grid
             item
             xs={12}
-            lg={6}
+            lg={12}
             sx={{
               backgroundColor: 'neutral.50',
               display: 'flex',
@@ -191,14 +170,7 @@ const Page = () => {
                       sx={{ mb: 1 }}
                       variant="h4"
                     >
-                      Welcome
-                    </Typography>
-                    <Typography
-                      color="text.secondary"
-                      sx={{ mb: 3 }}
-                      variant="body2"
-                    >
-                      Sign up on the internal platform
+                      Добро пожаловать
                     </Typography>
                     <Tabs
                       onChange={handleTabChange}
@@ -209,10 +181,6 @@ const Page = () => {
                         label="Email"
                         value="email"
                       />
-                      <Tab
-                        label="Phone Number"
-                        value="phoneNumber"
-                      />
                     </Tabs>
                     {tab === 'email' && (
                       <div>
@@ -220,7 +188,7 @@ const Page = () => {
                           error={Boolean(formik.touched.email && formik.errors.email)}
                           fullWidth
                           helperText={formik.touched.email && formik.errors.email}
-                          label="Email Address"
+                          label="Email Адрес"
                           name="email"
                           onBlur={formik.handleBlur}
                           onChange={formik.handleChange}
@@ -229,7 +197,7 @@ const Page = () => {
                           variant="outlined"
                         />
                         <FormHelperText sx={{ mt: 1 }}>
-                          Enter a valid email since this is a fully integrated authentication system. Optionally you can skip.
+                          Введите ваш email адрес
                         </FormHelperText>
                         {formik.errors.submit && (
                           <Typography
@@ -247,29 +215,8 @@ const Page = () => {
                           onClick={() => formik.handleSubmit()}
                           variant="contained"
                         >
-                          Continue
+                          Продолжить
                         </Button>
-                        <Button
-                          fullWidth
-                          size="large"
-                          sx={{ mt: 3 }}
-                          onClick={handleSkip}
-                        >
-                          Skip authentication
-                        </Button>
-                      </div>
-                    )}
-                    {tab === 'phoneNumber' && (
-                      <div>
-                        <Typography
-                          sx={{ mb: 1 }}
-                          variant="h6"
-                        >
-                          Not available in the demo
-                        </Typography>
-                        <Typography color="text.secondary">
-                          Zalter Identity does support SMS passcodes, but to prevent unnecessary costs we disabled this feature in the demo.
-                        </Typography>
                       </div>
                     )}
                   </div>
@@ -277,55 +224,7 @@ const Page = () => {
               </Box>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            lg={6}
-            sx={{
-              alignItems: 'center',
-              background: 'radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)',
-              color: 'white',
-              display: 'flex',
-              justifyContent: 'center',
-              '& img': {
-                maxWidth: '100%'
-              }
-            }}
-          >
-            <Box sx={{ p: 3 }}>
-              <Typography
-                align="center"
-                color="inherit"
-                sx={{
-                  fontSize: '24px',
-                  lineHeight: '32px',
-                  mb: 1
-                }}
-                variant="h1"
-              >
-                Authentication sponsored by&nbsp;
-                <Box
-                  component="a"
-                  href="https://zalter.com?ref=devias-mk-react"
-                  sx={{ color: '#15B79E' }}
-                  target="_blank"
-                >
-                  zalter.com
-                </Box>
-              </Typography>
-              <Typography
-                align="center"
-                sx={{ mb: 3 }}
-                variant="subtitle1"
-              >
-                Create secure, seamless user experiences with Zalter Passwordless Authentication.
-              </Typography>
-              <img
-                alt=""
-                src="/static/images/sign-in-illustration.svg"
-              />
-            </Box>
-          </Grid>
+         
         </Grid>
       </Box>
     </>

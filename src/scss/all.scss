@@ -1,0 +1,39 @@
+*::-webkit-scrollbar {
+    width: 7px; /* ширина scrollbar */
+    height: 9px;
+  }
+*::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255); /* цвет дорожки */
+    border-radius: 25px;
+  }
+*::-webkit-scrollbar-thumb {
+    background-color: #b3e3fb; /* цвет плашки */
+    border-radius: 20px; /* закругления плашки */
+    border: 3px solid #b3e3fb;  /* padding вокруг плашки */
+  }
+.current_task_field{
+    margin-left: 20px !important;
+    width: 30vw;
+}
+.dashboard-navbar-group-btn{
+    display: flex;
+    align-items: flex-end !important;
+}
+.logo_main{
+    display: flex;
+    text-decoration: none;
+    svg{
+        height: 70px;
+        width: 70px;
+    }
+}
+.logo_title{
+    color: white;
+    margin-left: 15px;
+    font-size: xx-large;
+    display: flex;
+    flex-direction: column;
+    span{
+        font-size: small;
+    }
+}
