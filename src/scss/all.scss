@@ -40,3 +40,104 @@
 .custom_table{
     margin-top: 40px;
 }
+.custom_box{
+    margin-top: 40px;
+}
+.custom_tree{
+    width: 100%;
+    max-width: none !important;
+}
+
+.custom_sidebar{
+    padding: 20px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 30vw;
+    min-width: 400px;
+    z-index: 999999;
+    height: 100%;
+    background: white;
+    animation: animation_sidebar linear 0.4s alternate;
+    overflow-x: hidden;
+}
+
+@keyframes animation_sidebar {
+    0%{
+        width: 0vw;
+        min-width: 0px;
+    }
+    100%{
+        width: 30vw;
+        min-width: 400px;
+    }
+}
+.custom_zagl{
+    z-index: 999998;
+    background: black;
+    opacity: 0.5;
+    width: 100vw;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+}
+.custom_nomenclature_input{
+    width: 100%;
+    max-width: none !important;
+}
+.btn_group{
+    margin-top: 15px;
+    display: flex;
+    justify-content: right;
+}
+.btn_group_wrapper{
+    display: flex;
+}
+.btn_cancel{
+    background: #D2D2D2;
+    margin-right: 10px;
+    padding: 2px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn_delete{
+    background: #D20707;
+    margin-right: 10px;
+    padding: 4px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn_save{
+    background: #042143;    
+    padding: 2px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nomenclature_detail{
+    margin-top: 10px;
+    font-size: xx-large;
+    font-weight: 500;
+    width: calc(30vw);
+    border-bottom: 1px solid black;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+}

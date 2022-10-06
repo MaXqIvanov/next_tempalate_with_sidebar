@@ -34,14 +34,24 @@ function createData(name, calories, fat, carbs, protein) {
     const handleChange = (event, value) => {
       setPage(value);
     };
+    const table_header = [
+        {
+            id: 1,
+            title: 'Артикул'
+        },
+        {
+            id: 2,
+            title: 'Название'
+        }
+    ]
     return (
     <Box {...props}>
       <TableContainer component={Paper} className={`custom_table`}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Артикул</TableCell>
-            <TableCell>Название</TableCell>
+            {table_header && table_header.map((elem)=> 
+                <TableCell key={elem.id}>{elem.title}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
