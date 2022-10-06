@@ -6,7 +6,7 @@ import { NomenclatureTable } from '../components/dashboard/nomenclature_table_to
 import { useSelector } from 'react-redux';
 import { NomenclatureTree } from '../components/dashboard/nomenclature_tree';
 import {useState} from 'react'
-import { Sidebar } from '../components/dashboard/sidebarCreate';
+import { SidebarCreate } from '../components/dashboard/sidebarCreate';
 import styles from '../scss/MainScreen.module.scss';
 
 const Page = () =>{
@@ -33,14 +33,12 @@ const Page = () =>{
          :<NomenclatureTree />}
       </Container>
     </Box>
-    {isVisibleSidebar && <Sidebar setIsVisibleSidebar={setIsVisibleSidebar}/>}
+    {isVisibleSidebar && <SidebarCreate setIsVisibleSidebar={setIsVisibleSidebar}/>}
   </>
-);
-
+)};
 Page.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
-)};
-
+  )
 export default Page;
