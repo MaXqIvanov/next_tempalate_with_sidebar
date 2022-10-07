@@ -46,6 +46,8 @@
 .custom_tree{
     width: 100%;
     max-width: none !important;
+    max-height: none !important;
+    height: 100% !important;
 }
 
 .custom_sidebar{
@@ -55,7 +57,7 @@
     right: 0px;
     bottom: 0px;
     width: 30vw;
-    min-width: 400px;
+    min-width: 420px;
     z-index: 999999;
     height: 100%;
     background: white;
@@ -70,7 +72,7 @@
     }
     100%{
         width: 30vw;
-        min-width: 400px;
+        min-width: 420px;
     }
 }
 .custom_zagl{
@@ -162,7 +164,7 @@
     margin-top: 10px;
     font-size: xx-large;
     font-weight: 500;
-    width: calc(30vw);
+    width: calc(31.5vw);
     border-bottom: 1px solid black;
     margin-left: -20px;
     padding-left: 20px;
@@ -224,4 +226,24 @@
 }
 .product_card_wrapper{
     min-height: 50vh !important;
+}
+.btn_save_change{
+    margin-top: 10px;
+    background: #042143;    
+    padding: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    width: fit-content;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.nomenclature_tree_key{
+    margin-top: 1px;
+    border-bottom: 1px solid rgb(174, 174, 174);
 }

@@ -2,8 +2,14 @@ import styles from '../../scss/MainScreen.module.scss';
 import TextField from '@mui/material/TextField';
 import {useState} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { createNomenclatureTree, deleteNomenclatureTree } from '../../store/nomenclatureSlice';
 
   export const SidebarCreate = (props) => {
+    const [code, setCode] = useState('')
+    const [name, setName] = useState('')
+    const dispatch = useDispatch()
+    const {nomenclature_edit} = useSelector((state)=> state.nomenclature)
     const [article_search, setArticleSearch] = useState([
       {
         id: 1,
@@ -36,20 +42,20 @@ import delete_img from '../../icons/nomenclature/delete_img.svg';
     <>
     <div className={`custom_sidebar`}>
         <div className={`nomenclature_detail`}>Добавить номенклатуру</div>
-        <TextField id="standard-basic" label="Артикул" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-        <TextField id="standard-basic" label="Название" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+        <TextField value={code} onChange={(e)=> setCode(e.target.value)} id="standard-basic" label="Артикул" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+        <TextField value={name} onChange={(e)=> setName(e.target.value)} id="standard-basic" label="Название" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
 
         <div className={`btn_group`}>
           <div className={`btn_group_wrapper`}>
-            <div className={`btn_cancel`}><span>Отмена</span></div>
-            <div className={`btn_delete`}><span>Удалить</span></div>
-            <div className={`btn_save`}><span>Сохранить</span></div>
+            <div onClick={()=> props.setIsVisibleSidebar(false)} className={`btn_cancel`}><span>Отмена</span></div>
+            <div onClick={()=> dispatch(deleteNomenclatureTree({id: nomenclature_edit.id, nav: props.setIsVisibleSidebar}))} className={`btn_delete`}><span>Удалить</span></div>
+            <div onClick={()=> dispatch(createNomenclatureTree({name: name, code: code}))} className={`btn_save`}><span>Сохранить</span></div>
           </div>
         </div>
 
         <div className={`nomenclature_detail`}>Параметры поиска</div>
         <div className={`parametr_search_group`}>
-          <TextField id="standard-basic" label="поиск" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+          <TextField id="standard-basic" label="" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
           <div className={`btn_save btn_add`}>Добавить +</div>
         </div>
         
@@ -63,7 +69,7 @@ import delete_img from '../../icons/nomenclature/delete_img.svg';
               <div className={`article_search_btn_change`}></div>
           </div>)}
         </div>
-        <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div>
+        {/* <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div> */}
     </div>
       <div onClick={()=> props.setIsVisibleSidebar(false)} className={`custom_zagl`}>
     </div>

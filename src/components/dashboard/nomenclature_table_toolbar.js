@@ -8,7 +8,7 @@ import {
     SvgIcon, Typography,
     Pagination
   } from '@mui/material';
-  import {useState} from 'react'
+  import {useState, useEffect} from 'react'
   import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,21 +16,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNomenclature, setNomenclatureEdit } from '../../store/nomenclatureSlice';
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+function createData(name, code) {
+    return { code, name };
   }
   
-  const rows = [
-    createData('Frozen yoghurt', 'DIN-рейка (100см) оцинкованная DIN-рейка (100см) оцинкованная DIN-рейка (100см) оцинкованная '),
-    createData('Ice cream sandwich', 'DIN-рейка (100см) оцинкованная 2'),
-    createData('Eclair', 'DIN-рейка (100см) оцинкованная 3'),
-    createData('Cupcake', 'DIN-рейка (100см) оцинкованная 4'),
-    createData('Gingerbread', 'DIN-рейка (100см) оцинкованная 5'),
-  ];
   
   export const NomenclatureTable = (props) => {
     const [page, setPage] = useState(1);
+    const [rows, setRows] = useState([]);
+    const {nomenclature_all, count_page, change_nomenclature} = useSelector((state)=> state.nomenclature)
+    const dispatch = useDispatch()
+    useEffect(() => {
+      dispatch(getNomenclature(page))
+    }, [page, change_nomenclature])
+    
+
+    useEffect(() => {
+      setRows(nomenclature_all)
+    }, [nomenclature_all])
+    
     const handleChange = (event, value) => {
       setPage(value);
     };
@@ -55,15 +62,21 @@ function createData(name, calories, fat, carbs, protein) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows && rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
+              <TableCell onClick={()=>{
+                props.setIsVisibleSidebarEdit(true)
+                dispatch(setNomenclatureEdit(row))
+              }} component="th" scope="row">
+                {row.code}
               </TableCell>
-              <TableCell>{row.calories}</TableCell>
+              <TableCell onClick={()=>{
+                props.setIsVisibleSidebarEdit(true)
+                dispatch(setNomenclatureEdit(row))
+              }}>{row.name}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -79,7 +92,7 @@ function createData(name, calories, fat, carbs, protein) {
         >
           <Pagination
             color="primary"
-            count={3}
+            count={count_page}
             size="small"
             page={page}
             onChange={handleChange}

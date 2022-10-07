@@ -1,9 +1,12 @@
 import styles from '../../scss/MainScreen.module.scss';
 import TextField from '@mui/material/TextField';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import {useState} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 
   export const SidebarCreate = (props) => {
+    const [isVisiblePassword, setIsVisiblePassword] = useState(false)
     const [article_search, setArticleSearch] = useState([
       {
         id: 1,
@@ -32,38 +35,51 @@ import delete_img from '../../icons/nomenclature/delete_img.svg';
       new_elem[value-1].title = elem
       setArticleSearch([...new_elem])
     }
+
+    const [checked, setChecked] = useState(false);
+
+    const handleChange = (event) => {
+      setChecked(event.target.checked);
+    };
+
     return (
     <>
     <div className={`custom_sidebar`}>
         <div className={`nomenclature_detail`}>Добавить Пользователя</div>
-        <TextField id="standard-basic" label="Артикул" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-        <TextField id="standard-basic" label="Название" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-
-        <div className={`btn_group`}>
-          <div className={`btn_group_wrapper`}>
-            <div className={`btn_cancel`}><span>Отмена</span></div>
-            <div className={`btn_delete`}><span>Удалить</span></div>
-            <div className={`btn_save`}><span>Сохранить</span></div>
+        {
+          !isVisiblePassword ? 
+          <>
+            <TextField id="standard-basic" label="Логин" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+            <TextField id="standard-basic" label="Имя" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+            <TextField id="standard-basic" label="Email" type={'email'} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+            <div onClick={()=> setIsVisiblePassword(true)} className={`btn_save_change`}><span>Изменить пароль</span></div>
+            <FormControlLabel
+              sx={{mt: 2}}
+              control={
+                <Switch checked={checked} onChange={handleChange} name="gilad" />
+              }
+              label="Активный"
+            />
+            <div className={`btn_group`}>
+              <div className={`btn_group_wrapper`}>
+                <div className={`btn_cancel`}><span>Отмена</span></div>
+                <div className={`btn_delete`}><span>Удалить</span></div>
+                <div className={`btn_save`}><span>Сохранить</span></div>
+              </div>
+            </div>
+          </>
+          :
+          <div>
+            <TextField id="standard-basic" label="Новый пароль" type={'password'} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+            <TextField id="standard-basic" label="Повторить пароль" type={'password'} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+            <div className={`btn_group`}>
+              <div className={`btn_group_wrapper`}>
+                <div onClick={()=> setIsVisiblePassword(false)} className={`btn_cancel`}><span>Отмена</span></div>
+                <div className={`btn_save`}><span>Сохранить</span></div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className={`nomenclature_detail`}>Параметры поиска</div>
-        <div className={`parametr_search_group`}>
-          <TextField id="standard-basic" label="поиск" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-          <div className={`btn_save btn_add`}>Добавить +</div>
-        </div>
-        
-        <div className={`article_search_block`}>
-          {article_search && article_search.map((elem)=>
-          <div className='article_search'>
-              <div className={`article_search_name`}>
-                <TextField id="standard-basic" label="Название" value={elem.title} onChange={(e)=>changeName({elem: e.target.value, value: elem.id})} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-              </div> 
-              <div title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
-              <div className={`article_search_btn_change`}></div>
-          </div>)}
-        </div>
-        <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div>
+        }
     </div>
       <div onClick={()=> props.setIsVisibleSidebar(false)} className={`custom_zagl`}>
     </div>
