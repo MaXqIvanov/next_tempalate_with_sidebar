@@ -37,3 +37,213 @@
         font-size: small;
     }
 }
+.custom_table{
+    margin-top: 40px;
+}
+.custom_box{
+    margin-top: 40px;
+}
+.custom_tree{
+    width: 100%;
+    max-width: none !important;
+    max-height: none !important;
+    height: 100% !important;
+}
+
+.custom_sidebar{
+    padding: 20px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 30vw;
+    min-width: 420px;
+    z-index: 999999;
+    height: 100%;
+    background: white;
+    animation: animation_sidebar linear 0.4s alternate;
+    overflow-x: hidden;
+}
+
+@keyframes animation_sidebar {
+    0%{
+        width: 0vw;
+        min-width: 0px;
+    }
+    100%{
+        width: 30vw;
+        min-width: 420px;
+    }
+}
+.custom_zagl{
+    z-index: 999998;
+    background: black;
+    opacity: 0.5;
+    width: 100vw;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+}
+.custom_nomenclature_input{
+    width: 100%;
+    max-width: none !important;
+}
+.btn_group{
+    margin-top: 15px;
+    display: flex;
+    justify-content: right;
+    animation: animation_btn 0.4s linear alternate;
+}
+@keyframes animation_btn {
+   0%{
+    transform: translateX(400px);
+   }
+   100%{
+    transform: translateX(0px);
+   } 
+}
+.btn_group_wrapper{
+    display: flex;
+}
+.btn_cancel{
+    background: #D2D2D2;
+    margin-right: 10px;
+    padding: 2px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.btn_delete{
+    background: #D20707;
+    margin-right: 10px;
+    padding: 4px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.btn_save{
+    background: #042143;    
+    padding: 2px;
+    width: 120px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.btn_save_change{
+    background: #042143;    
+    padding: 4px;
+    width: fit-content;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-width: 120px;
+    animation: animation_btn 0.4s linear alternate;
+}
+.nomenclature_detail{
+    margin-top: 10px;
+    font-size: xx-large;
+    font-weight: 500;
+    width: calc(31.5vw);
+    border-bottom: 1px solid black;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+}
+.parametr_search_group{
+    display: flex;
+    align-items: flex-end;
+}
+.btn_add{
+    max-height: 30px;
+    min-width: 130px;
+    margin-left: 10px;
+    animation: animation_btn 0.4s linear alternate;
+}
+.article_search_block{
+    margin-top: 30px;
+    height: fit-content;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+.article_search{
+    display: flex;
+    align-items: flex-end;
+    width: 100% !important;
+    max-width: none !important;
+}
+.article_search_name{
+    width: 100%;
+}
+.article_search_btn_change{
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('../icons/nomenclature/delete_img.svg');
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.btn_wrapper{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.article_search_btn_save{
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('../icons/nomenclature/approve_img.svg');
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.product_card_wrapper{
+    min-height: 50vh !important;
+}
+.btn_save_change{
+    margin-top: 10px;
+    background: #042143;    
+    padding: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    width: fit-content;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.nomenclature_tree_key{
+    margin-top: 1px;
+    border-bottom: 1px solid rgb(174, 174, 174);
+}

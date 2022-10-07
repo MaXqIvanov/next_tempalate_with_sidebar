@@ -4,14 +4,17 @@ import PropTypes from 'prop-types';
 import { Box, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { AuthContext } from '../contexts/auth-context';
 import { auth, ENABLE_AUTH } from '../lib/auth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../scss/MainScreen.module.scss'
+import { logout } from '../store/authSlice';
 export const AccountPopover = (props) => {
+  const dispatch = useDispatch()
   const { anchorEl, onClose, open, ...other } = props;
   const authContext = useContext(AuthContext);
   const [user_name, setUserName] = useState('Макс Иванов')
-  const {text} = useSelector((state)=> state.auth)
+  const {user} = useSelector((state)=> state.auth)
   const handleSignOut = async () => {
+    dispathc(logout())
     Router
       .push('/sign-in')
       .catch(console.error);
@@ -56,7 +59,7 @@ export const AccountPopover = (props) => {
           color="text.secondary"
           variant="body2"
         >
-          {user_name}
+          {user.name}
         </Typography>
       </Box>
       <MenuList

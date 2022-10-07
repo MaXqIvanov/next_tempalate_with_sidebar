@@ -15,6 +15,8 @@ import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
+import { useDispatch } from 'react-redux';
+import { getProfile } from '../store/authSlice';
 
 const items = [
   {
@@ -42,16 +44,11 @@ const items = [
     icon: (<UserIcon fontSize="small" />),
     title: 'Пользователи'
   },
-  {
-    href: '/login',
-    icon: (<LockIcon fontSize="small" />),
-    title: 'Авторизация'
-  },
-  {
-    href: '/register',
-    icon: (<UserAddIcon fontSize="small" />),
-    title: 'Регистрация'
-  },
+  // {
+  //   href: '/sign-in',
+  //   icon: (<LockIcon fontSize="small" />),
+  //   title: 'Авторизация'
+  // },
 ];
 
 export const DashboardSidebar = (props) => {
@@ -61,20 +58,10 @@ export const DashboardSidebar = (props) => {
     defaultMatches: true,
     noSsr: false
   });
-
-  useEffect(
-    () => {
-      if (!router.isReady) {
-        return;
-      }
-
-      if (open) {
-        onClose?.();
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [router.asPath]
-  );
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getProfile({router: router}))
+  }, [])
 
   const content = (
     <>

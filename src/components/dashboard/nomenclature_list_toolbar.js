@@ -5,13 +5,29 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon, Typography
+  SvgIcon, Typography,
 } from '@mui/material';
+import {useState} from 'react'
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import { useDispatch, useSelector } from 'react-redux';
+import {changeNomenclature} from '../../store/nomenclatureSlice';
 
-export const NomenclatureList = (props) => (
+export const NomenclatureList = (props) => {
+  const dispatch = useDispatch()
+  const nav_elem = [
+    {
+      id: 1,
+      title: 'Таблица'
+    },
+    {
+      id: 2,
+      title: 'Дерево'
+    }
+  ]
+  const {nomenclature_nav} = useSelector((state)=> state.nomenclature)
+  return (
   <Box {...props}>
     <Box
       sx={{
@@ -28,6 +44,27 @@ export const NomenclatureList = (props) => (
       >
         Номенклатура
       </Typography>
+      <Box sx={{ m: 1 }}>
+        {nav_elem && nav_elem.map((elem)=>
+                <Button
+                onClick={()=> dispatch(changeNomenclature(elem.id))}
+                key={elem.TextField}
+                sx={{m: 1}}
+                color={`${elem.id === nomenclature_nav ? 'secondary' : 'primary'}`}
+                variant="contained"
+              >
+                {elem.title}
+              </Button>
+        )}
+        <Button
+          sx={{m: 1}}
+          color="primary"
+          variant="contained"
+          onClick={()=> props.setIsVisibleSidebar(true)}
+        >
+          Добавить+
+        </Button>
+      </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
@@ -55,4 +92,5 @@ export const NomenclatureList = (props) => (
       </Card>
     </Box>
   </Box>
-);
+
+)};

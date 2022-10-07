@@ -5,14 +5,19 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon,
-  Typography
+  SvgIcon, Typography,
 } from '@mui/material';
-import { Download as DownloadIcon } from '../../icons/download';
+import {useState} from 'react'
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
+import { Download as DownloadIcon } from '../../icons/download';
+import { useDispatch, useSelector } from 'react-redux';
+import {changeNomenclature} from '../../store/nomenclatureSlice';
 
-export const ProductListToolbar = (props) => (
+export const IPClientsList = (props) => {
+  const dispatch = useDispatch()
+  const {nomenclature_nav} = useSelector((state)=> state.nomenclature)
+  return (
   <Box {...props}>
     <Box
       sx={{
@@ -27,26 +32,16 @@ export const ProductListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        Products
+        IP-Клиенты
       </Typography>
       <Box sx={{ m: 1 }}>
         <Button
-          startIcon={(<UploadIcon fontSize="small" />)}
-          sx={{ mr: 1 }}
-        >
-          Import
-        </Button>
-        <Button
-          startIcon={(<DownloadIcon fontSize="small" />)}
-          sx={{ mr: 1 }}
-        >
-          Export
-        </Button>
-        <Button
+          sx={{m: 1}}
           color="primary"
           variant="contained"
+          onClick={()=> props.setIsVisibleSidebar(true)}
         >
-          Add products
+          Добавить+
         </Button>
       </Box>
     </Box>
@@ -60,15 +55,15 @@ export const ProductListToolbar = (props) => (
                 startAdornment: (
                   <InputAdornment position="start">
                     <SvgIcon
-                      fontSize="small"
                       color="action"
+                      fontSize="small"
                     >
                       <SearchIcon />
                     </SvgIcon>
                   </InputAdornment>
                 )
               }}
-              placeholder="Search product"
+              placeholder="Поиск по ip-клиентам"
               variant="outlined"
             />
           </Box>
@@ -76,4 +71,5 @@ export const ProductListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-);
+
+)};

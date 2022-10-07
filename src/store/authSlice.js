@@ -6,16 +6,18 @@ import { HeadersDefaults } from 'axios';
 export const getProfile = createAsyncThunk(
   'auth/getProfile',
   async (params) => {
-    const token = Cookies.get('token')
-    const response = await api.get(`/users?token=${token}`)
+    const response = await api.get(`backend/api/accounts/profile/info/`)
     return {response, params}
   },
 )
 
 export const userAuth = createAsyncThunk(
-    'auth/userRegistration',
+    'auth/userAuth',
     async (params) => {
-      const response = await api(`users?email=${params.email}&password=${params.password}`)
+      const response = await api.post(`backend/api/accounts/auth/auth/`,{
+        username: params.username,
+        password: params.password
+      })
       return {response, params}
     },
   )
@@ -23,8 +25,8 @@ export const userAuth = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: {token: '', id: null, username: '', email: '', password: ''},
-    auth: true,
+    user: {},
+    auth: false,
     loading: false,
     text: 'fadasdasd'
   },
@@ -40,16 +42,36 @@ const authSlice = createSlice({
         state.loading = true
     });
     builder.addCase(getProfile.fulfilled, (state,  { payload }) => {
-        state.loading = false
-        if(payload.response.data?.length == 0){
-            payload.params('/auth')
-        }else {
-            state.auth = true
-            state.user = payload.response.data[0]
-        }
-        
+      if(payload.response.status === 401){
+        payload.params.router.push('/sign-in')
+      }
+      else{
+        console.log(payload);
+        state.user = payload.response.data
+      }
+      state.loading = false
     });
     builder.addCase(getProfile.rejected, (state) => {
+        state.loading = false
+    });
+
+    builder.addCase(userAuth.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(userAuth.fulfilled, (state,  { payload }) => {
+      console.log(payload);
+        if(payload.response?.status === 403){
+          alert(payload.response.data.detail)
+        }else{
+          Cookies.set('token', payload.response.data.token)
+          api.defaults.headers = {
+            Authorization: `Bearer ${payload.response.data.token}`
+          };
+          payload.params.router.push('/')
+        }
+        state.loading = false
+    });
+    builder.addCase(userAuth.rejected, (state) => {
         state.loading = false
     });
   },

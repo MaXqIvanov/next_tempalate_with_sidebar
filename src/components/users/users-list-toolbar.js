@@ -11,7 +11,7 @@ import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 
-export const HistoryRequestListToolbar = (props) => (
+export const UserListToolbar = (props) => (
   <Box {...props}>
     <Box
       sx={{
@@ -26,8 +26,18 @@ export const HistoryRequestListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        История запросов
+        Пользователи
       </Typography>
+      <Box sx={{ m: 1 }}>
+        <Button
+          sx={{m: 1}}
+          color="primary"
+          variant="contained"
+          onClick={()=> props.setIsVisibleSidebar(true)}
+        >
+          Добавить+
+        </Button>
+      </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
@@ -47,7 +57,7 @@ export const HistoryRequestListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Поиск по истории запросов"
+              placeholder="Поиск пользователя"
               variant="outlined"
             />
           </Box>
