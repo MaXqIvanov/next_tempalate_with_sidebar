@@ -5,13 +5,19 @@ import {
   CardContent,
   TextField,
   InputAdornment,
-  SvgIcon, Typography
+  SvgIcon, Typography,
 } from '@mui/material';
+import {useState} from 'react'
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import { useDispatch, useSelector } from 'react-redux';
+import {changeNomenclature} from '../../store/nomenclatureSlice';
 
-export const HistoryRequestListToolbar = (props) => (
+export const IPClientsList = (props) => {
+  const dispatch = useDispatch()
+  const {nomenclature_nav} = useSelector((state)=> state.nomenclature)
+  return (
   <Box {...props}>
     <Box
       sx={{
@@ -26,8 +32,18 @@ export const HistoryRequestListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        История запросов
+        IP-Клиенты
       </Typography>
+      <Box sx={{ m: 1 }}>
+        <Button
+          sx={{m: 1}}
+          color="primary"
+          variant="contained"
+          onClick={()=> props.setIsVisibleSidebar(true)}
+        >
+          Добавить+
+        </Button>
+      </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
@@ -47,7 +63,7 @@ export const HistoryRequestListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Поиск по истории запросов"
+              placeholder="Поиск по ip-клиентам"
               variant="outlined"
             />
           </Box>
@@ -55,4 +71,5 @@ export const HistoryRequestListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-);
+
+)};

@@ -55,7 +55,7 @@ const Login = () => {
               component="a"
               startIcon={<ArrowBackIcon fontSize="small" />}
             >
-              Dashboard
+              Асист
             </Button>
           </NextLink>
           <form onSubmit={formik.handleSubmit}>
@@ -79,15 +79,13 @@ const Login = () => {
             >
             </Grid>
             <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Имя пользователя"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              type="email"
+              type="text"
               value={formik.values.email}
               variant="outlined"
             />
@@ -116,7 +114,7 @@ const Login = () => {
                 Войти
               </Button>
             </Box>
-            <Typography
+            {/* <Typography
               color="textSecondary"
               variant="body2"
             >
@@ -136,7 +134,7 @@ const Login = () => {
                   Зарегистрируйтесь
                 </Link>
               </NextLink>
-            </Typography>
+            </Typography> */}
           </form>
         </Container>
       </Box>

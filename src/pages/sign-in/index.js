@@ -8,28 +8,23 @@ import { auth, ENABLE_AUTH } from '../../lib/auth';
 import { Logo } from '../../components/logo';
 import { useAuthContext } from '../../contexts/auth-context';
 import Router from 'next/router';
+import { useDispatch } from 'react-redux';
+import { userAuth } from '../../store/authSlice';
+import {useRouter}  from 'next/router';
 
 const Page = () => {
+  const dispatch = useDispatch()
   const [tab, setTab] = useState('email');
   const [emailSent, setEmailSent] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter()
+
   const authContext = useAuthContext();
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      submit: null
-    },
-    validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required')
-    }),
-    onSubmit: async (values, helpers) => {
-      alert("Запрос на сервер")
-        
-    }
-  });
+
+  const onSubmit = async (values, helpers) => {
+    dispatch(userAuth({password: password, username: username, router: router}))
+  }
 
   const handleTabChange = (event, value) => {
     setTab(value);
@@ -58,7 +53,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Sign in | Material Kit</title>
+        <title>Войти | Asist</title>
       </Head>
       <Box
         component="main"
@@ -91,7 +86,13 @@ const Page = () => {
                 p: 3
               }}
             >
-              <NextLink
+              <Logo
+                sx={{
+                height: 42,
+                width: 42
+                }}
+              />
+              {/* <NextLink
                 href="/"
                 passHref
               >
@@ -103,7 +104,7 @@ const Page = () => {
                     }}
                   />
                 </a>
-              </NextLink>
+              </NextLink> */}
             </Box>
             <Box
               sx={{
@@ -121,56 +122,12 @@ const Page = () => {
                   width: '100%'
                 }}
               >
-                {emailSent ? (
                   <div>
                     <Typography
                       sx={{ mb: 1 }}
                       variant="h4"
                     >
-                      Confirm your email
-                    </Typography>
-                    <Typography>
-                      We emailed a magic link to&nbsp;
-                      <Box
-                        component="span"
-                        sx={{
-                          color: 'primary.main'
-                        }}
-                      >
-                        {formik.values.email}
-                      </Box>
-                      <br />
-                      Click the link to to log in.
-                    </Typography>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        gap: 3,
-                        mt: 3
-                      }}
-                    >
-                      <Typography
-                        color="text.secondary"
-                        variant="body2"
-                      >
-                        Wrong email?
-                      </Typography>
-                      <Button
-                        color="inherit"
-                        onClick={handleRetry}
-                      >
-                        Use a different email
-                      </Button>
-                    </Box>
-                  </div>
-                ) : (
-                  <div>
-                    <Typography
-                      sx={{ mb: 1 }}
-                      variant="h4"
-                    >
-                      Добро пожаловать
+                      Добро пожаловать в Asist
                     </Typography>
                     <Tabs
                       onChange={handleTabChange}
@@ -185,34 +142,29 @@ const Page = () => {
                     {tab === 'email' && (
                       <div>
                         <TextField
-                          error={Boolean(formik.touched.email && formik.errors.email)}
                           fullWidth
-                          helperText={formik.touched.email && formik.errors.email}
-                          label="Email Адрес"
+                          label="Имя пользователя"
                           name="email"
-                          onBlur={formik.handleBlur}
-                          onChange={formik.handleChange}
-                          type="email"
-                          value={formik.values.email}
+                          onChange={(e)=>setUsername(e.target.value)}
+                          type="text"
+                          value={username}
                           variant="outlined"
                         />
-                        <FormHelperText sx={{ mt: 1 }}>
-                          Введите ваш email адрес
-                        </FormHelperText>
-                        {formik.errors.submit && (
-                          <Typography
-                            color="error"
-                            sx={{ mt: 2 }}
-                            variant="body2"
-                          >
-                            {formik.errors.submit}
-                          </Typography>
-                        )}
+                        <TextField
+                          fullWidth
+                          label="пароль"
+                          margin="normal"
+                          name="password"
+                          onChange={(e)=> setPassword(e.target.value)}
+                          type="password"
+                          value={password}
+                          variant="outlined"
+                        />
                         <Button
                           fullWidth
                           size="large"
                           sx={{ mt: 3 }}
-                          onClick={() => formik.handleSubmit()}
+                          onClick={() => onSubmit()}
                           variant="contained"
                         >
                           Продолжить
@@ -220,7 +172,6 @@ const Page = () => {
                       </div>
                     )}
                   </div>
-                )}
               </Box>
             </Box>
           </Grid>

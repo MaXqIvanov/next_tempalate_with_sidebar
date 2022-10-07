@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
 import { CustomerListResults } from '../components/history_request/history_request-list-results';
-import { CustomerListToolbar } from '../components/history_request/history_request-list-toolbar';
+import { HistoryRequestListToolbar } from '../components/history_request/history_request-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { customers } from '../__mocks__/customers';
+import { HistoryRequestTable } from '../components/history_request/history_request_table';
 
 const Page = () => (
   <>
@@ -20,9 +20,12 @@ const Page = () => (
       }}
     >
       <Container maxWidth={false}>
-        <CustomerListToolbar />
+        <HistoryRequestListToolbar />
         <Box sx={{ mt: 3 }}>
-          <CustomerListResults customers={customers} />
+          <CustomerListResults />
+        </Box>
+        <Box sx={{ mt: 3 }}>
+          <HistoryRequestTable />
         </Box>
       </Container>
     </Box>

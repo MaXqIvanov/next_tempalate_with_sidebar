@@ -51,8 +51,8 @@ class CustomDocument extends Document {
           />
         </Head>
         <body>
-        <Main />
-        <NextScript />
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );
@@ -66,10 +66,10 @@ CustomDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () => originalRenderPage({
     enhanceApp: (App) => (props) => (
-      <App
-        emotionCache={cache}
-        {...props}
-      />
+        <App
+          emotionCache={cache}
+          {...props}
+        />
     )
   });
 

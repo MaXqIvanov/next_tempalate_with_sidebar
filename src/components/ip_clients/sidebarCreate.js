@@ -35,7 +35,7 @@ import delete_img from '../../icons/nomenclature/delete_img.svg';
     return (
     <>
     <div className={`custom_sidebar`}>
-        <div className={`nomenclature_detail`}>Добавить номенклатуру</div>
+        <div className={`nomenclature_detail`}>Добавить IP-клиенты</div>
         <TextField id="standard-basic" label="Артикул" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
         <TextField id="standard-basic" label="Название" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
 

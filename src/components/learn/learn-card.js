@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { Avatar, Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
-import { Clock as ClockIcon } from '../../icons/clock';
-import { Download as DownloadIcon } from '../../icons/download';
+import { Card } from '@mui/material';
+import { DropzoneArea } from "mui-file-dropzone";
 
-export const ProductCard = ({ product, ...rest }) => (
+export const ProductCard = ({...rest }) => (
   <Card
     sx={{
       display: 'flex',
@@ -12,7 +11,7 @@ export const ProductCard = ({ product, ...rest }) => (
     }}
     {...rest}
   >
-   
+    <DropzoneArea filesLimit={2} onChange={(files) => console.log('Files:', files)} className={`drop_zone_area`}/>
   </Card>
 );
 

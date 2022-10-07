@@ -9,10 +9,11 @@ import { AuthConsumer, AuthProvider } from '../contexts/auth-context';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { registerChartJs } from '../utils/register-chart-js';
 import { theme } from '../theme';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { setupStore } from '../store/store';
 import '../scss/all.scss';
-
+import {useEffect} from 'react'
+import api from '../plugin/axios/api';
 registerChartJs();
 
 const clientSideEmotionCache = createEmotionCache();
@@ -20,7 +21,6 @@ const store = setupStore()
 
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
@@ -28,7 +28,7 @@ const App = (props) => {
       <Provider store={store}>
         <Head>
           <title>
-            Material Kit Pro
+            Asist
           </title>
           <meta
             name="viewport"
