@@ -3,12 +3,13 @@ import TextField from '@mui/material/TextField';
 import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, getNomenclatureKeys } from '../../store/nomenclatureSlice';
+import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, getNomenclatureKeys } from '../../store/nomenclatureSlice';
 
   export const SidebarEdit = (props) => {
     const {nomenclature_edit, nomenclature_keys} = useSelector((state)=> state.nomenclature)
     const [code, setCode] = useState(nomenclature_edit.code)
     const [name, setName] = useState(nomenclature_edit.name)
+    const [key_name, setKeyName] = useState('')
     const dispatch = useDispatch()
     const [article_search, setArticleSearch] = useState(nomenclature_keys)
     useEffect(() => {
@@ -49,8 +50,8 @@ import { changeNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, g
 
         <div className={`nomenclature_detail`}>Параметры поиска</div>
         <div className={`parametr_search_group`}>
-          <TextField id="standard-basic" label="" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-          <div className={`btn_save btn_add`}>Добавить +</div>
+          <TextField id="standard-basic" label="" value={key_name} onChange={(e)=> setKeyName(e.target.value)} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+          <div onClick={()=> dispatch(createNomenclatureKeys({id: nomenclature_edit.id, string: key_name}))} className={`btn_save btn_add`}>Добавить +</div>
         </div>
         
         <div className={`article_search_block`}>
@@ -62,7 +63,7 @@ import { changeNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, g
                 <TextField id="standard-basic" label="Название" value={elem.string} onChange={(e)=>changeName({elem: e.target.value, value: index})} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
               </div> 
               <div onClick={()=> dispatch(changeNomenclatureKeys({id: elem.id, nomenclature: nomenclature_edit.id, string: elem.string}))} title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
-              <div title={`Удалить изменения`} className={`article_search_btn_change`}></div>
+              <div onClick={()=> dispatch(deleteNomenclatureKeys({id: elem.id}))} title={`Удалить изменения`} className={`article_search_btn_change`}></div>
           </div>)}
         </div>
         {/* <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div> */}

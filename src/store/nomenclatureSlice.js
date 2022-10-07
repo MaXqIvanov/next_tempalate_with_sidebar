@@ -57,13 +57,33 @@ export const getNomenclatureKeys = createAsyncThunk(
   },
 )
 
-// backend/api/parser/keys/42/
 export const changeNomenclatureKeys = createAsyncThunk(
   'auth/changeNomenclatureKeys',
   async (params) => {
     console.log(params);
     const response = await api.put(`backend/api/parser/keys/${params.id}/`,{
       nomenclature: params.nomenclature,
+      string: params.string
+    })
+    return {response, params}
+  },
+)
+
+export const deleteNomenclatureKeys = createAsyncThunk(
+  'auth/deleteNomenclatureKeys',
+  async (params) => {
+    console.log(params);
+    const response = await api.delete(`backend/api/parser/keys/${params.id}/`)
+    return {response, params}
+  },
+)
+
+export const createNomenclatureKeys = createAsyncThunk(
+  'auth/createNomenclatureKeys',
+  async (params) => {
+    console.log(params);
+    const response = await api.post(`backend/api/parser/keys/`,{
+      nomenclature: params.id,
       string: params.string
     })
     return {response, params}
@@ -201,7 +221,37 @@ const authSlice = createSlice({
     builder.addCase(changeNomenclatureKeys.rejected, (state) => {
         state.loading = false
     });
-    // changeNomenclatureKeys
+
+    builder.addCase(deleteNomenclatureKeys.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(deleteNomenclatureKeys.fulfilled, (state,  { payload }) => {
+      console.log(payload);
+      if(payload.response.status === 204){
+        state.nomenclature_keys = state.nomenclature_keys.filter((elem)=> elem.id !== payload.params.id)
+      }
+      // state.nomenclature_keys = payload.response.data.results
+      state.loading = false
+    });
+    builder.addCase(deleteNomenclatureKeys.rejected, (state) => {
+        state.loading = false
+    });
+    // deleteNomenclatureKeys
+    builder.addCase(createNomenclatureKeys.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(createNomenclatureKeys.fulfilled, (state,  { payload }) => {
+      console.log(payload);
+      state.nomenclature_keys = [payload.response.data, ...state.nomenclature_keys]
+      
+      // if(payload.response.status === 204){}
+      // state.nomenclature_keys = payload.response.data.results
+      state.loading = false
+    });
+    builder.addCase(createNomenclatureKeys.rejected, (state) => {
+        state.loading = false
+    });
+    // createNomenclatureKeys
   },
 });
 
