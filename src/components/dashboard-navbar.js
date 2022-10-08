@@ -9,6 +9,7 @@ import { UserCircle as UserCircleIcon } from '../icons/user-circle';
 import { Users as UsersIcon } from '../icons/users';
 import { AccountPopover } from './account-popover';
 import not_user_img from '../icons/header/user.svg';
+import { useSelector } from 'react-redux';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -19,7 +20,7 @@ export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
   const settingsRef = useRef(null);
   const [openAccountPopover, setOpenAccountPopover] = useState(false);
-
+  const {user} = useSelector((state)=> state.auth)
   return (
     <>
       <DashboardNavbarRoot
@@ -85,7 +86,7 @@ export const DashboardNavbar = (props) => {
               ml: 1
             }}
             // src="/static/images/avatars/avatar_1.png"
-            src={`${not_user_img}`}
+            src={user.avatar ? `${user.avatar}` : `${not_user_img}`}
           >
             <UserCircleIcon fontSize="small" />
           </Avatar>

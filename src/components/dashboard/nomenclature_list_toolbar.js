@@ -7,12 +7,12 @@ import {
   InputAdornment,
   SvgIcon, Typography,
 } from '@mui/material';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 import { useDispatch, useSelector } from 'react-redux';
-import {changeNomenclature} from '../../store/nomenclatureSlice';
+import {changeNomenclature, getNomenclatureSearch, getNomenclatureTree, setPage} from '../../store/nomenclatureSlice';
 
 export const NomenclatureList = (props) => {
   const dispatch = useDispatch()
@@ -26,7 +26,29 @@ export const NomenclatureList = (props) => {
       title: 'Дерево'
     }
   ]
-  const {nomenclature_nav} = useSelector((state)=> state.nomenclature)
+  const {nomenclature_nav, current_page, change_nomenclature} = useSelector((state)=> state.nomenclature)
+  const [search_nomenclature, setSearchNomenclature] = useState('')
+  useEffect(() => {
+    console.log(nomenclature_nav);
+    // if(search_nomenclature.length > 0){
+      if(nomenclature_nav === 1){
+        dispatch(getNomenclatureSearch({search: search_nomenclature, page: current_page}))
+      }else{
+        dispatch(getNomenclatureTree({search: search_nomenclature, page: current_page}))
+      }
+    // }
+  }, [search_nomenclature, change_nomenclature, current_page, nomenclature_nav])
+  
+  useEffect(() => {
+    setSearchNomenclature('')
+    dispatch(setPage(1));
+  }, [nomenclature_nav])
+
+  useEffect(() => {
+    dispatch(setPage(1));
+  }, [search_nomenclature])
+  
+  
   return (
   <Box {...props}>
     <Box
@@ -71,6 +93,8 @@ export const NomenclatureList = (props) => {
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+              onChange={(e)=> setSearchNomenclature(e.target.value)}
+              value={search_nomenclature}
               fullWidth
               InputProps={{
                 startAdornment: (

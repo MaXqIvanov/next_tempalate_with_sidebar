@@ -17,7 +17,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNomenclature, setNomenclatureEdit } from '../../store/nomenclatureSlice';
+import { getNomenclature, setNomenclatureEdit, setPage } from '../../store/nomenclatureSlice';
 
 function createData(name, code) {
     return { code, name };
@@ -25,21 +25,24 @@ function createData(name, code) {
   
   
   export const NomenclatureTable = (props) => {
-    const [page, setPage] = useState(1);
+    // const [page, setPage] = useState(1);
     const [rows, setRows] = useState([]);
-    const {nomenclature_all, count_page, change_nomenclature} = useSelector((state)=> state.nomenclature)
+    const {nomenclature_all, count_page, change_nomenclature , current_page} = useSelector((state)=> state.nomenclature)
     const dispatch = useDispatch()
-    useEffect(() => {
-      dispatch(getNomenclature(page))
-    }, [page, change_nomenclature])
-    
 
     useEffect(() => {
       setRows(nomenclature_all)
     }, [nomenclature_all])
     
+    // useEffect(() => {
+    //   return () => {
+    //     dispatch(setPage(1));
+    //   }
+    // }, [])
+    
+
     const handleChange = (event, value) => {
-      setPage(value);
+      dispatch(setPage(value));
     };
     const table_header = [
         {
@@ -65,7 +68,7 @@ function createData(name, code) {
           {rows && rows.map((row) => (
             <TableRow
               key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor: 'pointer' }}
             >
               <TableCell onClick={()=>{
                 props.setIsVisibleSidebarEdit(true)
@@ -94,7 +97,7 @@ function createData(name, code) {
             color="primary"
             count={count_page}
             size="small"
-            page={page}
+            page={current_page}
             onChange={handleChange}
           />
     </Box>

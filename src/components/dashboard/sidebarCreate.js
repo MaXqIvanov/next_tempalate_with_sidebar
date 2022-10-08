@@ -1,43 +1,36 @@
 import styles from '../../scss/MainScreen.module.scss';
 import TextField from '@mui/material/TextField';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNomenclatureTree, deleteNomenclatureTree } from '../../store/nomenclatureSlice';
+import { createNomenclatureTree, deleteNomenclatureTree, createNomenclatureKeys, setNomenclatureEdit, changeNomenclatureKeys, deleteNomenclatureKeys, setNomenclatureKeys } from '../../store/nomenclatureSlice';
 
   export const SidebarCreate = (props) => {
     const [code, setCode] = useState('')
     const [name, setName] = useState('')
     const dispatch = useDispatch()
-    const {nomenclature_edit} = useSelector((state)=> state.nomenclature)
-    const [article_search, setArticleSearch] = useState([
-      {
-        id: 1,
-        title: 'YDN10-0100'
-      },
-      {
-        id: 2,
-        title: 'YDN20-0100'
-      },
-      {
-        id: 3,
-        title: 'YDN30-0100'
-      },
-      {
-        id: 4,
-        title: 'YDN30-0100'
-      },
-      {
-        id: 5,
-        title: 'YDN30-0100'
-      },
-    ])
+    const [key_name, setKeyName] = useState('')
+    const {nomenclature_edit, nomenclature_keys} = useSelector((state)=> state.nomenclature)
+    const [article_search, setArticleSearch] = useState([])
 
     const changeName = ({elem, value})=>{
-      let new_elem = article_search
-      new_elem[value-1].title = elem
-      setArticleSearch([...new_elem])
-    }
+      Object.freeze(article_search);
+      const arrCopy = [...article_search]; // 👈️ create copy
+      arrCopy[value] = {id: arrCopy[value].id, string: `${elem}`, nomenclature: arrCopy[value].nomenclature};
+      setArticleSearch([...arrCopy])
+      }
+
+    // useEffect(() => {
+    //   return () => {
+    //     dispatch(setNomenclatureEdit(''))
+    //     dispatch(setNomenclatureKeys(''))
+    //   }
+    // }, [])
+
+    useEffect(() => {
+      setArticleSearch(nomenclature_keys)
+  }, [nomenclature_keys])
+    
     return (
     <>
     <div className={`custom_sidebar`}>
@@ -55,23 +48,27 @@ import { createNomenclatureTree, deleteNomenclatureTree } from '../../store/nome
 
         <div className={`nomenclature_detail`}>Параметры поиска</div>
         <div className={`parametr_search_group`}>
-          <TextField id="standard-basic" label="" variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-          <div className={`btn_save btn_add`}>Добавить +</div>
+          <TextField id="standard-basic" label="" value={key_name} onChange={(e)=> setKeyName(e.target.value)} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+          <div onClick={()=> dispatch(createNomenclatureKeys({id: nomenclature_edit.id, string: key_name}))} className={`btn_save btn_add`}>Добавить +</div>
         </div>
         
         <div className={`article_search_block`}>
-          {article_search && article_search.map((elem)=>
+        {article_search && article_search.map((elem, index)=>
           <div className='article_search'>
               <div className={`article_search_name`}>
-                <TextField id="standard-basic" label="Название" value={elem.title} onChange={(e)=>changeName({elem: e.target.value, value: elem.id})} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+                <TextField id="standard-basic" label="Название" value={elem.string} onChange={(e)=>changeName({elem: e.target.value, value: index})} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
               </div> 
-              <div title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
-              <div className={`article_search_btn_change`}></div>
+              <div onClick={()=> dispatch(changeNomenclatureKeys({id: elem.id, nomenclature: nomenclature_edit.id, string: elem.string}))} title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
+              <div onClick={()=> dispatch(deleteNomenclatureKeys({id: elem.id}))} title={`Удалить изменения`} className={`article_search_btn_change`}></div>
           </div>)}
         </div>
         {/* <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div> */}
     </div>
-      <div onClick={()=> props.setIsVisibleSidebar(false)} className={`custom_zagl`}>
+      <div onClick={()=> {
+        props.setIsVisibleSidebar(false)
+        dispatch(setNomenclatureEdit(''))
+        dispatch(setNomenclatureKeys(''))
+      }} className={`custom_zagl`}>
     </div>
     </>
   )};

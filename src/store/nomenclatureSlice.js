@@ -11,10 +11,18 @@ export const getNomenclature = createAsyncThunk(
   },
 )
 
+export const getNomenclatureSearch = createAsyncThunk(
+  'auth/getNomenclatureSearch',
+  async (params, {getState}) => {
+    const response = await api(`backend/api/parser/nomenclatures/?search=${params.search}&page=${getState().nomenclature.current_page}`)
+    return {response, params}
+  },
+)
+
 export const getNomenclatureTree = createAsyncThunk(
   'auth/getNomenclatureTree',
-  async (params) => {
-    const response = await api(`backend/api/parser/nomenclatures/?page=${params}&expand_keys=1`)
+  async (params, {getState}) => {
+    const response = await api(`backend/api/parser/nomenclatures/?page=${getState().nomenclature.current_page}&search=${params.search}&expand_keys=0`)
     return {response, params}
   },
 )
@@ -43,8 +51,8 @@ export const createNomenclatureTree = createAsyncThunk(
 
 export const deleteNomenclatureTree = createAsyncThunk(
   'auth/deleteNomenclatureTree',
-  async (params) => {
-    const response = await api.delete(`backend/api/parser/nomenclatures/${params.id}/`)
+  async (params, {getState}) => {
+    const response = await api.delete(`backend/api/parser/nomenclatures/${getState().nomenclature.nomenclature_edit.id}/`)
     return {response, params}
   },
 )
@@ -116,6 +124,12 @@ const authSlice = createSlice({
     setNomenclatureEdit(state, action) {
       console.log(action.payload);
       state.nomenclature_edit = action.payload
+    },
+    setNomenclatureKeys(state, action) {
+      state.nomenclature_keys = []
+    },
+    setPage(state,action){
+      state.current_page = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -134,13 +148,28 @@ const authSlice = createSlice({
         state.loading = false
     });
 
+    builder.addCase(getNomenclatureSearch.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(getNomenclatureSearch.fulfilled, (state,  { payload }) => {
+      console.log(payload);
+      if(payload){
+        state.count_page = Math.round(payload.response.data.count / 30)
+        state.nomenclature_all = payload.response.data.results
+      }
+      state.loading = false
+    });
+    builder.addCase(getNomenclatureSearch.rejected, (state) => {
+        state.loading = false
+    });
+
     builder.addCase(getNomenclatureTree.pending, (state, action) => {
       state.loading = true
     });
     builder.addCase(getNomenclatureTree.fulfilled, (state,  { payload }) => {
       console.log(payload);
       if(payload){
-        state.count_page_tree = Math.round(payload.response.data.count / 30)
+        state.count_page = Math.round(payload.response.data.count / 30)
         state.nomenclature_tree = payload.response.data.results
       }
       state.loading = false
@@ -171,6 +200,9 @@ const authSlice = createSlice({
       if(payload){
         state.nomenclature_edit = payload.response.data
         state.change_nomenclature = !state.change_nomenclature
+        if(payload.response.status === 201){
+          alert('Номенклатура была создана')
+        }
       }
       if(payload.response.status === 400){
         alert(payload.response.data.code[0])
@@ -191,6 +223,11 @@ const authSlice = createSlice({
       }else{
         state.change_nomenclature = !state.change_nomenclature
         payload.params.nav(false)
+        if(payload.response.status === 204){
+          state.nomenclature_edit = ''
+          state.nomenclature_keys = ''
+          alert('Номенклатура успешно удалена')
+        }
       }
       state.loading = false
     });
@@ -216,6 +253,9 @@ const authSlice = createSlice({
     builder.addCase(changeNomenclatureKeys.fulfilled, (state,  { payload }) => {
       console.log(payload);
       // state.nomenclature_keys = payload.response.data.results
+      if(payload.response.status === 200){
+        alert('Ключ изменен успешно')
+      }
       state.loading = false
     });
     builder.addCase(changeNomenclatureKeys.rejected, (state) => {
@@ -236,13 +276,16 @@ const authSlice = createSlice({
     builder.addCase(deleteNomenclatureKeys.rejected, (state) => {
         state.loading = false
     });
-    // deleteNomenclatureKeys
     builder.addCase(createNomenclatureKeys.pending, (state, action) => {
       state.loading = true
     });
     builder.addCase(createNomenclatureKeys.fulfilled, (state,  { payload }) => {
       console.log(payload);
-      state.nomenclature_keys = [payload.response.data, ...state.nomenclature_keys]
+      if(payload.response.status === 400){
+        alert(payload?.response?.data?.nomenclature[0])
+      }else{
+        state.nomenclature_keys = [payload.response.data, ...state.nomenclature_keys]
+      }
       
       // if(payload.response.status === 204){}
       // state.nomenclature_keys = payload.response.data.results
@@ -256,4 +299,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { changeNomenclature, setNomenclatureEdit } = authSlice.actions;
+export const { changeNomenclature, setNomenclatureEdit, setNomenclatureKeys, setPage } = authSlice.actions;

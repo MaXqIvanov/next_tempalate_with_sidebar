@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, getNomenclatureKeys } from '../../store/nomenclatureSlice';
+import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, getNomenclatureKeys, setNomenclatureEdit, setNomenclatureKeys } from '../../store/nomenclatureSlice';
 
   export const SidebarEdit = (props) => {
     const {nomenclature_edit, nomenclature_keys} = useSelector((state)=> state.nomenclature)
@@ -14,6 +14,11 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
     const [article_search, setArticleSearch] = useState(nomenclature_keys)
     useEffect(() => {
       dispatch(getNomenclatureKeys(nomenclature_edit.id))
+      // return () => {
+      //   dispatch(setNomenclatureEdit(''))
+      //   dispatch(setNomenclatureKeys(''))
+      // }
+      
     }, [])
     useEffect(() => {
         setArticleSearch(nomenclature_keys)
@@ -26,10 +31,6 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
 
     const arrCopy = [...article_search]; // 👈️ create copy
     arrCopy[value] = {id: arrCopy[value].id, string: `${elem}`, nomenclature: arrCopy[value].nomenclature};
-
-    //     console.log(article_search);
-    //   let new_elem = article_search
-    //   new_elem[value].string = elem
       setArticleSearch([...arrCopy])
     }
 
@@ -68,7 +69,11 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
         </div>
         {/* <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div> */}
     </div>
-      <div onClick={()=> props.setIsVisibleSidebarEdit(false)} className={`custom_zagl`}>
+      <div onClick={()=> {
+        props.setIsVisibleSidebarEdit(false)
+        dispatch(setNomenclatureEdit(''))
+        dispatch(setNomenclatureKeys(''))
+      }} className={`custom_zagl`}>
     </div>
     </>
   )};

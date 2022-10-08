@@ -13,7 +13,7 @@ import {
   import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
   import TreeItem from '@mui/lab/TreeItem';
-import { getNomenclatureTree } from '../../store/nomenclatureSlice';
+import { getNomenclatureTree, setPage } from '../../store/nomenclatureSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 function createData(name, calories, fat, carbs, protein) {
@@ -21,17 +21,19 @@ function createData(name, calories, fat, carbs, protein) {
   }
   
   export const NomenclatureTree = (props) => {
-    const [page, setPage] = useState(1);
+    // const [page, setPage] = useState(1);
     const [rows, setRows] = useState([]);
-    const {nomenclature_tree, count_page_tree} = useSelector((state)=> state.nomenclature)
+    const {nomenclature_tree, count_page, current_page} = useSelector((state)=> state.nomenclature)
 
     const dispatch = useDispatch()
-    useEffect(() => {
-      dispatch(getNomenclatureTree(page))
-    }, [page])
+    // useEffect(() => {
+    //   return () => {
+    //     dispatch(setPage(1));
+    //   }
+    // }, [])
 
     const handleChange = (event, value) => {
-      setPage(value);
+      dispatch(setPage(value));
     };
     return (
         <Box {...props} className={`custom_box`}>
@@ -66,9 +68,9 @@ function createData(name, calories, fat, carbs, protein) {
         >
           <Pagination
             color="primary"
-            count={count_page_tree}
+            count={count_page}
             size="small"
-            page={page}
+            page={current_page}
             onChange={handleChange}
           />
         </Box>

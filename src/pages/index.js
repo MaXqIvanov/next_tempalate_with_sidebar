@@ -22,6 +22,7 @@ const Page = () =>{
       </title>
     </Head>
     <Box
+      className={isVisibleSidebar ? 'page_visible' :  isVisibleSidebarEdit ? 'page_visible' : 'page'}
       component="main"
       sx={{
         flexGrow: 1,
