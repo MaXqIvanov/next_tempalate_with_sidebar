@@ -10,8 +10,24 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import { useDispatch, useSelector } from 'react-redux';
+import {useState, useEffect} from 'react'
+import { getHistoryRequest, setPage } from '../../store/historyRequestSlice';
 
-export const HistoryRequestListToolbar = (props) => (
+export const HistoryRequestListToolbar = (props) => {
+  const dispatch = useDispatch()
+  const {current_page} = useSelector((state)=> state.history_request)
+  const [search_history_request, setSearchHistoryRequest] = useState('')
+
+  useEffect(() => {
+    dispatch(getHistoryRequest({search: search_history_request, page: current_page}))
+  }, [search_history_request, current_page])
+
+  useEffect(() => {
+    dispatch(setPage(1));
+  }, [search_history_request])
+
+return(
   <Box {...props}>
     <Box
       sx={{
@@ -34,6 +50,8 @@ export const HistoryRequestListToolbar = (props) => (
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+              value={search_history_request}
+              onChange={(e)=> setSearchHistoryRequest(e.target.value)}
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -55,4 +73,4 @@ export const HistoryRequestListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-);
+)};

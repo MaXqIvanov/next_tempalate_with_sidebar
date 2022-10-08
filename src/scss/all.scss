@@ -64,7 +64,21 @@
     animation: animation_sidebar linear 0.4s alternate;
     overflow-x: hidden;
 }
-
+.custom_sidebar_w60{
+    padding: 20px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 60vw;
+    min-width: 520px;
+    max-width: 60vw;
+    z-index: 999999;
+    height: 100%;
+    background: white;
+    animation: animation_sidebar_w60 linear 0.5s alternate;
+    overflow-x: hidden;
+}
 @keyframes animation_sidebar {
     0%{
         width: 0vw;
@@ -72,6 +86,16 @@
     }
     100%{
         width: 30vw;
+        min-width: 420px;
+    }
+}
+@keyframes animation_sidebar_w60 {
+    0%{
+        width: 0vw;
+        min-width: 0px;
+    }
+    100%{
+        width: 60vw;
         min-width: 420px;
     }
 }
@@ -165,6 +189,20 @@
     font-size: xx-large;
     font-weight: 500;
     width: calc(31.5vw);
+    border-bottom: 1px solid black;
+    margin-left: -20px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    @media(max-width: 1500px){
+        width: calc(100% + 40px);
+    }
+}
+.nomenclature_detail_w60{
+    margin-top: 10px;
+    font-size: xx-large;
+    font-weight: 500;
+    width: calc(100% + 40px);
     border-bottom: 1px solid black;
     margin-left: -20px;
     padding-left: 20px;

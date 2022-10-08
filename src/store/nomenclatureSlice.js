@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { HeadersDefaults } from 'axios';
 
 export const getNomenclature = createAsyncThunk(
-  'auth/getNomenclature',
+  'nomenclature/getNomenclature',
   async (params) => {
     const response = await api(`backend/api/parser/nomenclatures/?page=${params}`)
     return {response, params}
@@ -12,7 +12,7 @@ export const getNomenclature = createAsyncThunk(
 )
 
 export const getNomenclatureSearch = createAsyncThunk(
-  'auth/getNomenclatureSearch',
+  'nomenclature/getNomenclatureSearch',
   async (params, {getState}) => {
     const response = await api(`backend/api/parser/nomenclatures/?search=${params.search}&page=${getState().nomenclature.current_page}`)
     return {response, params}
@@ -20,7 +20,7 @@ export const getNomenclatureSearch = createAsyncThunk(
 )
 
 export const getNomenclatureTree = createAsyncThunk(
-  'auth/getNomenclatureTree',
+  'nomenclature/getNomenclatureTree',
   async (params, {getState}) => {
     const response = await api(`backend/api/parser/nomenclatures/?page=${getState().nomenclature.current_page}&search=${params.search}&expand_keys=0`)
     return {response, params}
@@ -28,7 +28,7 @@ export const getNomenclatureTree = createAsyncThunk(
 )
 
 export const editNomenclatureTree = createAsyncThunk(
-  'auth/editNomenclatureTree',
+  'nomenclature/editNomenclatureTree',
   async (params) => {
     const response = await api.put(`backend/api/parser/nomenclatures/${params.id}/`,{
       code: params.code,
@@ -39,7 +39,7 @@ export const editNomenclatureTree = createAsyncThunk(
 )
 
 export const createNomenclatureTree = createAsyncThunk(
-  'auth/createNomenclatureTree',
+  'nomenclature/createNomenclatureTree',
   async (params) => {
     const response = await api.post(`backend/api/parser/nomenclatures/`,{
       code: params.code,
@@ -50,7 +50,7 @@ export const createNomenclatureTree = createAsyncThunk(
 )
 
 export const deleteNomenclatureTree = createAsyncThunk(
-  'auth/deleteNomenclatureTree',
+  'nomenclature/deleteNomenclatureTree',
   async (params, {getState}) => {
     const response = await api.delete(`backend/api/parser/nomenclatures/${getState().nomenclature.nomenclature_edit.id}/`)
     return {response, params}
@@ -58,7 +58,7 @@ export const deleteNomenclatureTree = createAsyncThunk(
 )
 
 export const getNomenclatureKeys = createAsyncThunk(
-  'auth/getNomenclatureKeys',
+  'nomenclature/getNomenclatureKeys',
   async (params) => {
     const response = await api.get(`backend/api/parser/keys/?nomenclature=${params}`)
     return {response, params}
@@ -66,7 +66,7 @@ export const getNomenclatureKeys = createAsyncThunk(
 )
 
 export const changeNomenclatureKeys = createAsyncThunk(
-  'auth/changeNomenclatureKeys',
+  'nomenclature/changeNomenclatureKeys',
   async (params) => {
     console.log(params);
     const response = await api.put(`backend/api/parser/keys/${params.id}/`,{
@@ -78,7 +78,7 @@ export const changeNomenclatureKeys = createAsyncThunk(
 )
 
 export const deleteNomenclatureKeys = createAsyncThunk(
-  'auth/deleteNomenclatureKeys',
+  'nomenclature/deleteNomenclatureKeys',
   async (params) => {
     console.log(params);
     const response = await api.delete(`backend/api/parser/keys/${params.id}/`)
@@ -87,7 +87,7 @@ export const deleteNomenclatureKeys = createAsyncThunk(
 )
 
 export const createNomenclatureKeys = createAsyncThunk(
-  'auth/createNomenclatureKeys',
+  'nomenclature/createNomenclatureKeys',
   async (params) => {
     console.log(params);
     const response = await api.post(`backend/api/parser/keys/`,{
@@ -98,8 +98,8 @@ export const createNomenclatureKeys = createAsyncThunk(
   },
 )
 
-const authSlice = createSlice({
-  name: 'auth',
+const nomenclatureSlice = createSlice({
+  name: 'nomenclature',
   initialState: {
     nomenclature_nav: 1,
     nomenclature_all: [],
@@ -298,5 +298,5 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
-export const { changeNomenclature, setNomenclatureEdit, setNomenclatureKeys, setPage } = authSlice.actions;
+export default nomenclatureSlice.reducer;
+export const { changeNomenclature, setNomenclatureEdit, setNomenclatureKeys, setPage } = nomenclatureSlice.actions;
