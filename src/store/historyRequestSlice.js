@@ -81,4 +81,4 @@ const historyRequestSlice = createSlice({
 });
 
 export default historyRequestSlice.reducer;
-export const { chooseRequest, setPage } = historyRequestSlice.actions;
+export const { chooseRequest, setPage, setPageResults } = historyRequestSlice.actions;

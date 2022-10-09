@@ -1,11 +1,15 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Pagination } from '@mui/material';
 import { ProductListToolbar } from '../components/learn/learn-list-toolbar';
-import { ProductCard } from '../components/learn/learn-card';
+import { LearnCard } from '../components/learn/learn-card';
+import { LearnTree } from '../components/learn/learn_tree';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { DropzoneArea } from "mui-file-dropzone";
+import { useDispatch, useSelector } from 'react-redux';
 
-const Page = () => (
+const Page = () => {
+  const {learn_all} = useSelector((state)=> state.learn)
+  return(
   <>
     <Head>
       <title>
@@ -32,7 +36,11 @@ const Page = () => (
                 md={12}
                 xs={12}
               >
-              <ProductCard />
+                {learn_all.length > 0 ? 
+              <LearnTree />
+              :
+              <LearnCard />
+              }
             </Grid>
           </Grid>
         </Box>
@@ -52,7 +60,7 @@ const Page = () => (
       </Container>
     </Box>
   </>
-);
+)};
 
 Page.getLayout = (page) => (
   <DashboardLayout>
