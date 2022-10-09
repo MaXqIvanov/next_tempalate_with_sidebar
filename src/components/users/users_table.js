@@ -8,7 +8,7 @@ import {
     SvgIcon, Typography,
     Pagination
   } from '@mui/material';
-  import {useState} from 'react'
+  import {useState, useEffect} from 'react'
   import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,32 +16,33 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { setPage, chooseRequest } from '../../store/usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-function createData(ip, data, email, searching) {
-    return { ip, data, email, searching };
+function createData(username, name, email, is_active) {
+    return { username, name, email, is_active };
   }
   
-  const rows = [
-    createData('127.0.0.1', '01.01.2022', 'maksivanov36@ya.ru', '93'),
-    createData('127.0.0.2', '02.01.2022', 'maksivanov37@ya.ru', '94'),
-    createData('127.0.0.3', '03.01.2022', 'maksivanov38@ya.ru', '95'),
-    createData('127.0.0.4', '04.01.2022', 'maksivanov39@ya.ru', '96'),
-    createData('127.0.0.5', '05.01.2022', 'maksivanov40@ya.ru', '98'),
-  ];
-  
   export const UserTable = (props) => {
-    const [page, setPage] = useState(1);
+    const [rows, setRows] = useState([]);
     const handleChange = (event, value) => {
       setPage(value);
     };
+    const dispatch = useDispatch()
+    const {current_page, count_page, users_all} = useSelector((state)=> state.users)
+    
+    useEffect(() => {
+      setRows(users_all)
+    }, [users_all])
+{/*     return { username, name, email, is_active }; */}
     const table_header = [
         {
             id: 1,
-            title: 'IP'
+            title: 'Логин'
         },
         {
             id: 2,
-            title: 'Дата/Время'
+            title: 'Имя'
         },
         {
           id: 3,
@@ -49,7 +50,7 @@ function createData(ip, data, email, searching) {
         },
         {
           id: 4,
-          title: '% нахождения'
+          title: 'Активный'
         }
     ]
     return (
@@ -65,21 +66,33 @@ function createData(ip, data, email, searching) {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor: 'pointer' }}
             >
-              <TableCell component="th" scope="row">
-                {row.ip}
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }} component="th" scope="row">
+                {row.username}
               </TableCell>
-              <TableCell>{row.data}</TableCell>
-              <TableCell>{row.email}</TableCell>
-              <TableCell>{row.searching}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.name}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.email}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.is_active ? 'Да' : 'Нет'}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-
+{/*     return { username, name, email, is_active }; */}
      <Box
           sx={{
             display: 'flex',
@@ -89,9 +102,9 @@ function createData(ip, data, email, searching) {
         >
           <Pagination
             color="primary"
-            count={3}
+            count={count_page}
             size="small"
-            page={page}
+            page={current_page}
             onChange={handleChange}
           />
     </Box>

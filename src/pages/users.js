@@ -5,9 +5,11 @@ import { UserListToolbar } from '../components/users/users-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 import {useState} from 'react'
 import { SidebarCreate } from '../components/users/sidebarCreate';
+import { SidebarEdit } from '../components/users/sidebarEdit';
 
 const Page = () => {
   const [isVisibleSidebar, setIsVisibleSidebar] = useState(false)
+  const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
 
 return(
   <>
@@ -26,11 +28,12 @@ return(
       <Container maxWidth={false}>
         <UserListToolbar setIsVisibleSidebar={setIsVisibleSidebar}/>
         <Box sx={{ mt: 3 }}>
-          <UserTable />
+          <UserTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>
         </Box>
       </Container>
     </Box>
     {isVisibleSidebar && <SidebarCreate setIsVisibleSidebar={setIsVisibleSidebar}/>}
+    {isVisibleSidebarEdit && <SidebarEdit setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/> }
   </>
 )};
 
