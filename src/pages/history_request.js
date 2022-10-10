@@ -10,6 +10,16 @@ import {useState} from 'react'
 const Page = () => {
   const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
 
+  const [ordering, setOrdering] = useState('ip_client')
+  const setOrderingFunc = (value)=> {
+    console.log(value);
+    if(ordering === value.order){
+      setOrdering(`-${ordering}`)
+    }else{
+      setOrdering(value.order)
+    }
+  }
+
 return (
   <>
     <Head>
@@ -26,12 +36,12 @@ return (
       }}
     >
       <Container maxWidth={false}>
-        <HistoryRequestListToolbar />
+        <HistoryRequestListToolbar ordering={ordering}/>
         <Box sx={{ mt: 3 }}>
           <CustomerListResults />
         </Box>
         <Box sx={{ mt: 3 }}>
-          <HistoryRequestTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>
+          <HistoryRequestTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/>
         </Box>
       </Container>
     </Box>

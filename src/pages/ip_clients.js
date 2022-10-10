@@ -13,6 +13,16 @@ const Page = () => {
   const [isVisibleSidebar, setIsVisibleSidebar] = useState(false)
   const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
 
+  const [ordering, setOrdering] = useState('ipaddr')
+  const setOrderingFunc = (value)=> {
+    console.log(value);
+    if(ordering === value.order){
+      setOrdering(`-${ordering}`)
+    }else{
+      setOrdering(value.order)
+    }
+  }
+
   return(
   <>
     <Head>
@@ -28,8 +38,8 @@ const Page = () => {
       }}
     >
       <Container maxWidth={false}>
-        <IPClientsList setIsVisibleSidebar={setIsVisibleSidebar}/>
-        <IPClientsTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>
+        <IPClientsList setIsVisibleSidebar={setIsVisibleSidebar} ordering={ordering}/>
+        <IPClientsTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/>
       </Container>
     </Box>
     {isVisibleSidebar && <SidebarCreate setIsVisibleSidebar={setIsVisibleSidebar}/>}

@@ -22,8 +22,8 @@ export const IPClientsList = (props) => {
   const {current_page, changed_ip_clients} = useSelector((state)=> state.ip_clients)
 
   useEffect(() => {
-    dispatch(getIpCLient({search: search_ip_client}))
-  }, [search_ip_client, current_page, changed_ip_clients])
+    dispatch(getIpCLient({search: search_ip_client, ordering: props.ordering}))
+  }, [search_ip_client, current_page, changed_ip_clients, props.ordering])
 
   useEffect(() => {
     dispatch(setPage(1));

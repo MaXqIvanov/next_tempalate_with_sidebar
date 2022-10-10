@@ -38,21 +38,26 @@ function createData(username, name, email, is_active) {
     const table_header = [
         {
             id: 1,
-            title: 'Логин'
+            title: 'Логин',
+            order: 'username',
         },
         {
             id: 2,
-            title: 'Имя'
+            title: 'Имя',
+            order: 'name',
         },
         {
           id: 3,
-          title: 'Email'
+          title: 'Email',
+          order: 'email',
         },
         {
           id: 4,
-          title: 'Активный'
+          title: 'Активный',
+          order: 'is_active',
         }
     ]
+    const [current_table_header, setCurrentTableHeader] = useState(1)
     return (
     <Box {...props}>
       <TableContainer component={Paper} className={`custom_table`}>
@@ -60,7 +65,10 @@ function createData(username, name, email, is_active) {
         <TableHead>
           <TableRow>
             {table_header && table_header.map((elem)=> 
-                <TableCell key={elem.id}>{elem.title}</TableCell>)}
+                <TableCell onClick={()=>{
+                  props.setOrderingFunc(elem)
+                  setCurrentTableHeader(elem.id)
+                }} className={current_table_header === elem.id ? 'choose_header' : 'header_not'} sx={{cursor: 'pointer'}} key={elem.id}>{elem.title}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>

@@ -7,7 +7,7 @@ export const getUsers = createAsyncThunk(
   'users/getUsers',
   async (params, {getState}) => {
     console.log(params);
-    const response = await api.get(`backend/api/accounts/users/?search=${params.search}&page=${getState().users.current_page}`)
+    const response = await api.get(`backend/api/accounts/users/?search=${params.search}&page=${getState().users.current_page}&ordering=${params.ordering}`)
     return {response, params}
   },
 )

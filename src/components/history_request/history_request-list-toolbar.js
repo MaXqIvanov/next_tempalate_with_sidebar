@@ -21,8 +21,8 @@ export const HistoryRequestListToolbar = (props) => {
   const [search_history_request, setSearchHistoryRequest] = useState('')
   const debouncedSearchTerm = useDebounce(search_history_request, 300);
   useEffect(() => {
-    dispatch(getHistoryRequest({search: search_history_request, page: current_page}))
-  }, [debouncedSearchTerm, current_page])
+    dispatch(getHistoryRequest({search: search_history_request, page: current_page, ordering: props.ordering}))
+  }, [debouncedSearchTerm, current_page, props.ordering])
 
   useEffect(() => {
     dispatch(setPage(1));

@@ -20,8 +20,8 @@ export const UserListToolbar = (props) => {
   const {current_page, change_info_user} = useSelector((state)=> state.users)
 
   useEffect(() => {
-    dispatch(getUsers({search: search_users}))
-  }, [search_users, current_page, change_info_user])
+    dispatch(getUsers({search: search_users, ordering: props.ordering}))
+  }, [search_users, current_page, change_info_user, props.ordering])
 
   useEffect(() => {
     dispatch(setPage(1));

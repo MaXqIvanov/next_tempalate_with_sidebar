@@ -11,6 +11,15 @@ const Page = () => {
   const [isVisibleSidebar, setIsVisibleSidebar] = useState(false)
   const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
 
+  const [ordering, setOrdering] = useState('username')
+  const setOrderingFunc = (value)=> {
+    console.log(value);
+    if(ordering === value.order){
+      setOrdering(`-${ordering}`)
+    }else{
+      setOrdering(value.order)
+    }
+  }
 return(
   <>
     <Head>
@@ -26,9 +35,9 @@ return(
       }}
     >
       <Container maxWidth={false}>
-        <UserListToolbar setIsVisibleSidebar={setIsVisibleSidebar}/>
+        <UserListToolbar setIsVisibleSidebar={setIsVisibleSidebar} ordering={ordering}/>
         <Box sx={{ mt: 3 }}>
-          <UserTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>
+          <UserTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/>
         </Box>
       </Container>
     </Box>

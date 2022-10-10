@@ -6,7 +6,7 @@ import { HeadersDefaults } from 'axios';
 export const getIpCLient = createAsyncThunk(
   'ip_client/getIpCLient',
   async (params, {getState}) => {
-    const response = await api.get(`backend/api/parser/ip_clients/?search=${params.search}&page=${getState().ip_clients.current_page}`)
+    const response = await api.get(`backend/api/parser/ip_clients/?search=${params.search}&page=${getState().ip_clients.current_page}&ordering=${params.ordering}`)
     return {response, params}
   },
 )

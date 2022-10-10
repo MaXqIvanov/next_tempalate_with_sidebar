@@ -6,7 +6,7 @@ import { HeadersDefaults } from 'axios';
 export const getHistoryRequest = createAsyncThunk(
   'history_request/getHistoryRequest',
   async (params, {getState}) => {
-    const response = await api(`backend/api/parser/search_requests/?search=${params.search}&page=${getState().history_request.current_page}`)
+    const response = await api(`backend/api/parser/search_requests/?search=${params.search}&page=${getState().history_request.current_page}&ordering=${params.ordering}`)
     return {response, params}
   },
 )
