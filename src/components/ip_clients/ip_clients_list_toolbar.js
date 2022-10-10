@@ -62,6 +62,7 @@ export const IPClientsList = (props) => {
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+              autoComplete='off'
               onChange={(e)=> setSearchIpClient(e.target.value)}
               value={search_ip_client}
               fullWidth

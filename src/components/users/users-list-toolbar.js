@@ -60,6 +60,7 @@ return(
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+              autoComplete='off'
               value={search_users}
               onChange={(e)=> setSearchUsers(e.target.value)}
               fullWidth

@@ -95,6 +95,7 @@ export const NomenclatureList = (props) => {
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+              autoComplete='off'
               onChange={(e)=> setSearchNomenclature(e.target.value)}
               value={search_nomenclature}
               fullWidth

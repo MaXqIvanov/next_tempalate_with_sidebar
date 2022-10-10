@@ -51,6 +51,7 @@ return(
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+              autoComplete='off'
               value={search_history_request}
               onChange={(e)=> setSearchHistoryRequest(e.target.value)}
               fullWidth
