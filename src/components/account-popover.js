@@ -9,7 +9,7 @@ import styles from '../scss/MainScreen.module.scss'
 import { logout } from '../store/authSlice';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { changeProfile } from '../store/authSlice';
+import { changeProfile, changeIsVisibleProfile } from '../store/authSlice';
 // changeProfile
 
 export const AccountPopover = (props) => {
@@ -26,10 +26,6 @@ export const AccountPopover = (props) => {
   };
 
   const [isVisibleSidebar, setIsVisibleSidebarEdit] = useState(false)
-  const [name, setName] = useState('')
-  const [avatar, setAvatar] = useState('')
-  const [email, setEmail] = useState('')
-  const [new_password, setNewPassword] = useState('')
 
   const saveImage = (img) => {
     // console.log(img.target.files[0]);
@@ -67,7 +63,7 @@ export const AccountPopover = (props) => {
           Аккаунт
         </Typography>
         <Typography
-          onClick={()=> setIsVisibleSidebarEdit(true)}
+          onClick={()=> dispatch(changeIsVisibleProfile(true))}
           color="text.secondary"
           variant="body2"
           sx={{cursor: 'pointer'}}

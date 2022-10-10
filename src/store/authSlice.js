@@ -51,6 +51,9 @@ const authSlice = createSlice({
       state.user = {token : '', id: null, username: '', password: '', email: ''}
       Cookies.remove('token');
     },
+    changeIsVisibleProfile(state, action){
+      state.isVisibleProfile = !state.isVisibleProfile
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state, action) => {
