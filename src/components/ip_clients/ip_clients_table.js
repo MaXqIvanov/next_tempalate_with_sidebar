@@ -8,7 +8,7 @@ import {
     SvgIcon, Typography,
     Pagination
   } from '@mui/material';
-  import {useState} from 'react'
+  import {useState, useEffect} from 'react'
   import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,21 +16,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPage, chooseRequest } from '../../store/ipClientSlice';
 
-function createData(ip, inside, rows_allowed, blocked, comments) {
-    return { ip, inside, rows_allowed, blocked, comments };
+function createData(ipaddr, iek_client, allow_string_count, blocked, comment) {
+    return { ipaddr, iek_client, allow_string_count, blocked, comment };
   }
   
-  const rows = [
-    createData('127.0.0.1', 'ДА', '4563', 'НЕТ', 'Какой-то там комментраий'),
-    createData('127.0.0.2', 'ДА', '4564', 'НЕТ', 'Какой-то там комментраий2'),
-    createData('127.0.0.3', 'ДА', '4565', 'НЕТ', 'Какой-то там комментраий3'),
-    createData('127.0.0.4', 'ДА', '4567', 'НЕТ', 'Какой-то там комментраий4'),
-    createData('127.0.0.5', 'ДА', '4568', 'НЕТ', 'Какой-то там комментраий5'),
-  ];
-  
   export const IPClientsTable = (props) => {
-    const [page, setPage] = useState(1);
+    const [rows, setRows] = useState([]);
+    const dispatch = useDispatch()
+    const {current_page, count_page, ip_clients_all} = useSelector((state)=> state.ip_clients)
+
+    useEffect(() => {
+      setRows(ip_clients_all)
+    }, [ip_clients_all])
+    
     const handleChange = (event, value) => {
       setPage(value);
     };
@@ -70,15 +71,30 @@ function createData(ip, inside, rows_allowed, blocked, comments) {
           {rows.map((row) => (
             <TableRow
               key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor: 'pointer' }}
             >
-              <TableCell component="th" scope="row">
-                {row.ip}
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }} component="th" scope="row">
+                {row.ipaddr}
               </TableCell>
-              <TableCell>{row.inside}</TableCell>
-              <TableCell>{row.rows_allowed}</TableCell>
-              <TableCell>{row.blocked}</TableCell>
-              <TableCell>{row.comments}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.iek_client === false ? 'Нет' : 'Да'}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.allow_string_count}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.blocked === false ? 'Нет' : 'Да'}</TableCell>
+              <TableCell onClick={()=>{
+                dispatch(chooseRequest(row))
+                props.setIsVisibleSidebarEdit(true)
+              }}>{row.comment}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -94,9 +110,9 @@ function createData(ip, inside, rows_allowed, blocked, comments) {
         >
           <Pagination
             color="primary"
-            count={3}
+            count={count_page}
             size="small"
-            page={page}
+            page={current_page}
             onChange={handleChange}
           />
     </Box>

@@ -21,7 +21,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import { Search as SearchIcon } from '../../icons/search';
-
+// import debounce from 'debounce'
+import useDebounce from '../../hooks/use-debounce';
 
 function createData(input_code, input_name, output_code, output_name) {
   return { input_code, input_name, output_code, output_name };
@@ -29,12 +30,15 @@ function createData(input_code, input_name, output_code, output_name) {
 
   export const SidebarEdit = (props) => {
     const {count_page_results, current_page_results, choose_request, history_request_results} = useSelector((state)=> state.history_request)
+
     const [search_history_request_results, setSearchHistoryRequestResults] = useState('')
+    const debouncedSearchTerm = useDebounce(search_history_request_results, 300);
+
     const dispatch = useDispatch()
     useEffect(() => {
-      // dispatch(getNomenclatureKeys(nomenclature_edit.id))   
-      dispatch(getHistoryRequestResults({search: search_history_request_results}))   
-    }, [count_page_results, search_history_request_results])
+      // dispatch(getNomenclatureKeys(nomenclature_edit.id))  
+      dispatch(getHistoryRequestResults({search: search_history_request_results}))
+    }, [current_page_results, debouncedSearchTerm])
     
     const table_header = [{
       id: 1,
@@ -63,9 +67,10 @@ function createData(input_code, input_name, output_code, output_name) {
 
     useEffect(() => {
       dispatch(setPageResults(1));
-    }, [search_history_request_results])
+    }, [debouncedSearchTerm])
 
     const [rows, setRows] = useState([]);
+    
     return (
     <>
     <div className={`custom_sidebar_w60`}>

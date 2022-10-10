@@ -6,7 +6,6 @@ import { HeadersDefaults } from 'axios';
 export const getLearn = createAsyncThunk(
   'learn/getLearn',
   async (params, {getState}) => {
-    console.log(params.file);
     let data = new FormData()
     data.append('file', params.file)
     const response = await api.post(`backend/api/parser/prepair_learning_data/`, data)
@@ -17,7 +16,6 @@ export const getLearn = createAsyncThunk(
 export const sendLearn = createAsyncThunk(
     'learn/sendLearn',
     async (params, {getState}) => {
-      console.log(params);
     //   let new_params = [{...params[0]},{...params[1]}]
       const response = await api.post(`backend/api/parser/system_learning/`, params)
       return {response, params}
@@ -47,7 +45,6 @@ const learnSlice = createSlice({
         state.loading = true
     });
     builder.addCase(getLearn.fulfilled, (state,  { payload }) => {
-      console.log(payload); 
       if(payload.response.status === 200){
         // state.count_page = Math.round(payload.response.data.count / 30)
         state.learn_all = payload.response.data
@@ -62,7 +59,6 @@ const learnSlice = createSlice({
         state.loading = true
     });
     builder.addCase(sendLearn.fulfilled, (state,  { payload }) => {
-      console.log(payload); 
       if(payload.response.status === 200){
         // state.count_page = Math.round(payload.response.data.count / 30)
         alert(payload.response.data.detail)

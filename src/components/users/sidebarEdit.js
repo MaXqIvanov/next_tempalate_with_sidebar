@@ -13,7 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser, changeUser, deleteUser } from '../../store/usersSlice';
+import { createUser, changeUser, deleteUser, changePassword } from '../../store/usersSlice';
 
   export const SidebarEdit = (props) => {
     const [isVisiblePassword, setIsVisiblePassword] = useState(false)
@@ -27,7 +27,8 @@ import { createUser, changeUser, deleteUser } from '../../store/usersSlice';
     const [password, setPassword] = useState(choose_user.password)
     const [repeat_password, setRepeatPassword] = useState(choose_user.password)
     const [avatar, setFile] = useState(choose_user.avatar)
-
+// errors
+    const [errors, setErrors] = useState('')
     const handleChange = (event) => {
       setChecked(event.target.checked);
     };
@@ -45,6 +46,14 @@ import { createUser, changeUser, deleteUser } from '../../store/usersSlice';
       console.log(choose_user);
     }, [choose_user])
     
+    const changeUserPassword = ()=> {
+      if(password !== repeat_password){
+        setErrors('Пароли не совпадают')
+      }else{
+        setErrors('')
+        dispatch(changePassword({password: password, isVisiblePassword: setIsVisiblePassword})) 
+      }
+    }
 
     return (
     <>
@@ -102,10 +111,11 @@ import { createUser, changeUser, deleteUser } from '../../store/usersSlice';
           <div>
             <TextField onChange={(e)=>  setPassword(e.target.value)} value={password} id="standard-basic" label="Новый пароль" type={'password'} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
             <TextField onChange={(e)=>  setRepeatPassword(e.target.value)} value={repeat_password} id="standard-basic" label="Повторить пароль" type={'password'} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
+            {errors.length > 0 && <div className={`errors`}>{errors}</div> }
             <div className={`btn_group`}>
               <div className={`btn_group_wrapper`}>
                 <div onClick={()=> setIsVisiblePassword(false)} className={`btn_cancel`}><span>Отмена</span></div>
-                <div className={`btn_save`}><span>Сохранить</span></div>
+                <div onClick={()=> changeUserPassword()} className={`btn_save`}><span>Сохранить</span></div>
               </div>
             </div>
           </div>

@@ -44,7 +44,7 @@ const historyRequestSlice = createSlice({
       state.current_page = action.payload
     },
     setPageResults(state,action){
-        state.count_page_results = action.payload
+        state.current_page_results = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -52,7 +52,6 @@ const historyRequestSlice = createSlice({
         state.loading = true
     });
     builder.addCase(getHistoryRequest.fulfilled, (state,  { payload }) => {
-      console.log(payload); 
       if(payload.response.status === 200){
         state.count_page = Math.round(payload.response.data.count / 30)
         state.history_request_all = payload.response.data.results
@@ -67,7 +66,6 @@ const historyRequestSlice = createSlice({
         state.loading = true
     });
     builder.addCase(getHistoryRequestResults.fulfilled, (state,  { payload }) => {
-      console.log(payload); 
       if(payload.response.status === 200){
         state.count_page_results = Math.round(payload.response.data.count / 30)
         state.history_request_results = payload.response.data.results

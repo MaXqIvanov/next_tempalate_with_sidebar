@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   nomenclature: nomenclatureSlice,
   history_request: historyRequestSlice,
   learn: learnSlice,
-  ip_client: ipClientSlice,
+  ip_clients: ipClientSlice,
   users: usersSlice
 });
 

@@ -13,6 +13,7 @@ import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 import { useDispatch, useSelector } from 'react-redux';
 import {changeNomenclature, getNomenclatureSearch, getNomenclatureTree, setPage} from '../../store/nomenclatureSlice';
+import useDebounce from '../../hooks/use-debounce';
 
 export const NomenclatureList = (props) => {
   const dispatch = useDispatch()
@@ -28,8 +29,8 @@ export const NomenclatureList = (props) => {
   ]
   const {nomenclature_nav, current_page, change_nomenclature} = useSelector((state)=> state.nomenclature)
   const [search_nomenclature, setSearchNomenclature] = useState('')
+  const debouncedSearchTerm = useDebounce(search_nomenclature, 300);
   useEffect(() => {
-    console.log(nomenclature_nav);
     // if(search_nomenclature.length > 0){
       if(nomenclature_nav === 1){
         dispatch(getNomenclatureSearch({search: search_nomenclature, page: current_page}))
@@ -37,7 +38,7 @@ export const NomenclatureList = (props) => {
         dispatch(getNomenclatureTree({search: search_nomenclature, page: current_page}))
       }
     // }
-  }, [search_nomenclature, change_nomenclature, current_page, nomenclature_nav])
+  }, [debouncedSearchTerm, change_nomenclature, current_page, nomenclature_nav])
   
   useEffect(() => {
     setSearchNomenclature('')
@@ -46,7 +47,7 @@ export const NomenclatureList = (props) => {
 
   useEffect(() => {
     dispatch(setPage(1));
-  }, [search_nomenclature])
+  }, [debouncedSearchTerm])
   
   
   return (

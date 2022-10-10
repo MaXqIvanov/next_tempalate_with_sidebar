@@ -13,19 +13,20 @@ import { Download as DownloadIcon } from '../../icons/download';
 import { useDispatch, useSelector } from 'react-redux';
 import {useState, useEffect} from 'react'
 import { getHistoryRequest, setPage } from '../../store/historyRequestSlice';
+import useDebounce from '../../hooks/use-debounce';
 
 export const HistoryRequestListToolbar = (props) => {
   const dispatch = useDispatch()
   const {current_page} = useSelector((state)=> state.history_request)
   const [search_history_request, setSearchHistoryRequest] = useState('')
-
+  const debouncedSearchTerm = useDebounce(search_history_request, 300);
   useEffect(() => {
     dispatch(getHistoryRequest({search: search_history_request, page: current_page}))
-  }, [search_history_request, current_page])
+  }, [debouncedSearchTerm, current_page])
 
   useEffect(() => {
     dispatch(setPage(1));
-  }, [search_history_request])
+  }, [debouncedSearchTerm])
 
 return(
   <Box {...props}>

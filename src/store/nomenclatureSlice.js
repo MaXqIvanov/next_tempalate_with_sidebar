@@ -68,7 +68,6 @@ export const getNomenclatureKeys = createAsyncThunk(
 export const changeNomenclatureKeys = createAsyncThunk(
   'nomenclature/changeNomenclatureKeys',
   async (params) => {
-    console.log(params);
     const response = await api.put(`backend/api/parser/keys/${params.id}/`,{
       nomenclature: params.nomenclature,
       string: params.string
@@ -80,7 +79,6 @@ export const changeNomenclatureKeys = createAsyncThunk(
 export const deleteNomenclatureKeys = createAsyncThunk(
   'nomenclature/deleteNomenclatureKeys',
   async (params) => {
-    console.log(params);
     const response = await api.delete(`backend/api/parser/keys/${params.id}/`)
     return {response, params}
   },
@@ -89,7 +87,6 @@ export const deleteNomenclatureKeys = createAsyncThunk(
 export const createNomenclatureKeys = createAsyncThunk(
   'nomenclature/createNomenclatureKeys',
   async (params) => {
-    console.log(params);
     const response = await api.post(`backend/api/parser/keys/`,{
       nomenclature: params.id,
       string: params.string
@@ -118,11 +115,9 @@ const nomenclatureSlice = createSlice({
   },
   reducers: {
     changeNomenclature(state, action) { 
-        console.log(action.payload);
-        state.nomenclature_nav = action.payload
+      state.nomenclature_nav = action.payload
     },
     setNomenclatureEdit(state, action) {
-      console.log(action.payload);
       state.nomenclature_edit = action.payload
     },
     setNomenclatureKeys(state, action) {
@@ -137,7 +132,6 @@ const nomenclatureSlice = createSlice({
         state.loading = true
     });
     builder.addCase(getNomenclature.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload){
         state.count_page = Math.round(payload.response.data.count / 30)
         state.nomenclature_all = payload.response.data.results
@@ -152,7 +146,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(getNomenclatureSearch.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload){
         state.count_page = Math.round(payload.response.data.count / 30)
         state.nomenclature_all = payload.response.data.results
@@ -167,7 +160,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(getNomenclatureTree.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload){
         state.count_page = Math.round(payload.response.data.count / 30)
         state.nomenclature_tree = payload.response.data.results
@@ -182,7 +174,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(editNomenclatureTree.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload){
         state.change_nomenclature = !state.change_nomenclature
       }
@@ -196,7 +187,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(createNomenclatureTree.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload){
         state.nomenclature_edit = payload.response.data
         state.change_nomenclature = !state.change_nomenclature
@@ -217,17 +207,16 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(deleteNomenclatureTree.fulfilled, (state,  { payload }) => {
-      console.log(payload);
-      if(payload.response.status === 400){
-        alert(payload.response.data.code[0])
+      if(payload.response.status === 400 || payload.response.status === 404){
+        alert(payload.response.data.code ? payload.response.data.code[0] : 'Для удаления необходимо создать номенклатуру')
       }else{
-        state.change_nomenclature = !state.change_nomenclature
-        payload.params.nav(false)
         if(payload.response.status === 204){
           state.nomenclature_edit = ''
           state.nomenclature_keys = ''
           alert('Номенклатура успешно удалена')
         }
+        state.change_nomenclature = !state.change_nomenclature
+        payload.params.nav(false)
       }
       state.loading = false
     });
@@ -239,7 +228,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(getNomenclatureKeys.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       state.nomenclature_keys = payload.response.data.results
       state.loading = false
     });
@@ -251,7 +239,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(changeNomenclatureKeys.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       // state.nomenclature_keys = payload.response.data.results
       if(payload.response.status === 200){
         alert('Ключ изменен успешно')
@@ -266,7 +253,6 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(deleteNomenclatureKeys.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload.response.status === 204){
         state.nomenclature_keys = state.nomenclature_keys.filter((elem)=> elem.id !== payload.params.id)
       }
@@ -280,9 +266,8 @@ const nomenclatureSlice = createSlice({
       state.loading = true
     });
     builder.addCase(createNomenclatureKeys.fulfilled, (state,  { payload }) => {
-      console.log(payload);
       if(payload.response.status === 400){
-        alert(payload?.response?.data?.nomenclature[0])
+        alert(payload?.response?.data?.nomenclature ? 'Необходимо создать номенклатуру' : 'Добавить поле не получилось')
       }else{
         state.nomenclature_keys = [payload.response.data, ...state.nomenclature_keys]
       }

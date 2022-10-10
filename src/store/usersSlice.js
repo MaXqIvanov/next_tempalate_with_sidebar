@@ -44,6 +44,17 @@ export const changeUser = createAsyncThunk(
   },
 )
 
+export const changePassword = createAsyncThunk(
+  'users/changePassword',
+  async (params, {getState}) => {
+    console.log(params);
+    const response = await api.post(`backend/api/accounts/users/${getState().users.choose_user.id}/change_password/`,{
+      password: params.password
+    })
+    return {response, params}
+  },
+)
+
 export const deleteUser = createAsyncThunk(
   'users/deleteUser',
   async (params, {getState}) => {
@@ -78,7 +89,7 @@ const usersSlice = createSlice({
     });
     builder.addCase(getUsers.fulfilled, (state,  { payload }) => {
       console.log(payload); 
-      if(payload.response.status === 200){
+      if(payload?.response?.status === 200){
         state.count_page = Math.round(payload.response.data.count / 30)
         state.users_all = payload.response.data.results
       }
@@ -137,6 +148,31 @@ const usersSlice = createSlice({
       state.loading = false
     });
     builder.addCase(deleteUser.rejected, (state) => {
+        state.loading = false
+    });
+
+    // changePassword
+    builder.addCase(changePassword.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(changePassword.fulfilled, (state,  { payload }) => {
+      console.log(payload); 
+      if(payload.response.status === 200){
+        alert("Пароли успешно изменены")
+        payload.params.isVisiblePassword(false)
+      }else{
+        alert(payload.response.data.detail)
+      }
+      // if(payload.response.status === 204){
+      //   state.change_info_user = !state.change_info_user
+      //   payload.params.isSidebar(false)
+      //   alert('Пользователь успешно удалён')
+      // }else{
+      //   alert('Удалить не получилось')
+      // }
+      state.loading = false
+    });
+    builder.addCase(changePassword.rejected, (state) => {
         state.loading = false
     });
   },

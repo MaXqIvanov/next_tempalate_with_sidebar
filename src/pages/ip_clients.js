@@ -6,10 +6,12 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { IPClientsList } from '../components/ip_clients/ip_clients_list_toolbar';
 import {useState} from 'react'
 import { SidebarCreate } from '../components/ip_clients/sidebarCreate';
+import { SidebarEdit } from '../components/ip_clients/sidebarEdit';
 import { IPClientsTable } from '../components/ip_clients/ip_clients_table';
 
 const Page = () => {
   const [isVisibleSidebar, setIsVisibleSidebar] = useState(false)
+  const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
 
   return(
   <>
@@ -27,10 +29,11 @@ const Page = () => {
     >
       <Container maxWidth={false}>
         <IPClientsList setIsVisibleSidebar={setIsVisibleSidebar}/>
-        <IPClientsTable />
+        <IPClientsTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>
       </Container>
     </Box>
     {isVisibleSidebar && <SidebarCreate setIsVisibleSidebar={setIsVisibleSidebar}/>}
+    {isVisibleSidebarEdit && <SidebarEdit setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/> }
   </>
 )};
 
