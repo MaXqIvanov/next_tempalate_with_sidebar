@@ -33,6 +33,11 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
     arrCopy[value] = {id: arrCopy[value].id, string: `${elem}`, nomenclature: arrCopy[value].nomenclature};
       setArticleSearch([...arrCopy])
     }
+    const deleteNomenclature = ()=> {
+      if(confirm('Вы уверены, что хотите удалить номенклатуру?')){
+        dispatch(deleteNomenclatureTree({id: nomenclature_edit.id, nav: props.setIsVisibleSidebarEdit}))
+      }
+    }
 
     return (
     <>
@@ -44,7 +49,7 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
         <div className={`btn_group`}>
           <div className={`btn_group_wrapper`}>
             <div onClick={()=> props.setIsVisibleSidebarEdit(false)} className={`btn_cancel`}><span>Отмена</span></div>
-            <div onClick={()=> dispatch(deleteNomenclatureTree({id: nomenclature_edit.id, nav: props.setIsVisibleSidebarEdit}))} className={`btn_delete`}><span>Удалить</span></div>
+            <div onClick={()=> deleteNomenclature()} className={`btn_delete`}><span>Удалить</span></div>
             <div onClick={()=> dispatch(editNomenclatureTree({id: nomenclature_edit.id, name: name, code: code}))} className={`btn_save`}><span>Сохранить</span></div>
           </div>
         </div>
