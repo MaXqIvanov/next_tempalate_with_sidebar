@@ -38,7 +38,15 @@ import { changeIpClient, deleteIpClient } from '../../store/ipClientSlice';
       setFile(img.target.files[0])
     }
 
-    
+    const deleteIpClientFunc = ()=> {
+      if(confirm('Вы уверены, что хотите удалить ip-клиента?')){
+        dispatch(deleteIpClient({
+          isVisibleSidebar: props.setIsVisibleSidebarEdit
+        }))
+      }else{
+
+      }
+    }    
     return (
     <>
     <div className={`custom_sidebar`}>
@@ -64,9 +72,7 @@ import { changeIpClient, deleteIpClient } from '../../store/ipClientSlice';
             <div className={`btn_group`}>
               <div className={`btn_group_wrapper`}>
                 <div onClick={()=> props.setIsVisibleSidebarEdit(false)} className={`btn_cancel`}><span>Отмена</span></div>
-                <div onClick={()=> dispatch(deleteIpClient({
-                  isVisibleSidebar: props.setIsVisibleSidebarEdit
-                }))} className={`btn_delete`}><span>Удалить</span></div>
+                <div onClick={()=> deleteIpClientFunc()} className={`btn_delete`}><span>Удалить</span></div>
                 <div onClick={()=> dispatch(changeIpClient({
                     ipaddr: ip,
                     allow_string_count: allowed_string,

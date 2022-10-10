@@ -55,6 +55,13 @@ import { createUser, changeUser, deleteUser, changePassword } from '../../store/
       }
     }
 
+    const deleteUsersFunc = ()=> {
+      if(confirm('Вы уверены, что хотите удалить пользователя?')){
+        dispatch(deleteUser({isSidebar: props.setIsVisibleSidebarEdit}))
+      }else{
+
+      }
+    }    
     return (
     <>
     <div className={`custom_sidebar`}>
@@ -96,7 +103,7 @@ import { createUser, changeUser, deleteUser, changePassword } from '../../store/
             <div className={`btn_group`}>
               <div className={`btn_group_wrapper`}>
                 <div  onClick={()=> props.setIsVisibleSidebarEdit(false)} className={`btn_cancel`}><span>Отмена</span></div>
-                <div onClick={()=> dispatch(deleteUser({isSidebar: props.setIsVisibleSidebarEdit}))} className={`btn_delete`}><span>Удалить</span></div>
+                <div onClick={()=> deleteUsersFunc()} className={`btn_delete`}><span>Удалить</span></div>
                 <div onClick={()=> dispatch(changeUser({
                     username: username,
                     email: email,
