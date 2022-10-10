@@ -32,15 +32,14 @@ const Page = () => (
             color="textPrimary"
             variant="h1"
           >
-            404: The page you are looking for isn’t here
+            404: Такой страницы не существует
           </Typography>
           <Typography
             align="center"
             color="textPrimary"
             variant="subtitle2"
           >
-            You either tried some shady route or you came here by mistake.
-            Whichever it is, try using the navigation
+            Попробуйте изменить страничку в url строке или нажмите на кнопку ниже
           </Typography>
           <Box sx={{ textAlign: 'center' }}>
             <img
@@ -64,7 +63,8 @@ const Page = () => (
               sx={{ mt: 3 }}
               variant="contained"
             >
-              Go back to dashboard
+              Вернуться на главную
+              
             </Button>
           </NextLink>
         </Box>
