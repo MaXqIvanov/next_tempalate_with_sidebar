@@ -30,6 +30,7 @@
     "debounce": "^1.2.1",
     "formik": "2.2.9",
     "js-cookie": "^3.0.1",
+    "lottie-react": "^2.3.1",
     "mui-file-dropzone": "^4.0.2",
     "next": "12.3.0",
     "next-redux-wrapper": "^8.0.0",

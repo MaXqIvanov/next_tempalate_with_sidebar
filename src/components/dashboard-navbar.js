@@ -12,6 +12,8 @@ import not_user_img from '../icons/header/user.svg';
 import Button from '@mui/material/Button';
 import { changeIsVisibleProfile, changeProfile, changePassword } from '../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import loadingScreen from '../icons/preload.json';
+import Lottie from 'lottie-react';
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -24,7 +26,7 @@ export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
   const settingsRef = useRef(null);
   const [openAccountPopover, setOpenAccountPopover] = useState(false);
-  const {user, isVisibleProfile} = useSelector((state)=> state.auth)
+  const {user, isVisibleProfile, loadingProfile, secondeLoadProfile} = useSelector((state)=> state.auth)
   const [name, setName] = useState(user.name)
   const [email, setEmail] = useState(user.email)
   const [avatar, setFile] = useState('')
@@ -71,8 +73,6 @@ export const DashboardNavbar = (props) => {
             px: 2
           }}
         >
-
-{/* test */}
 {isVisibleProfile &&
     <>
      <div className={`custom_sidebar`}>
@@ -132,7 +132,6 @@ export const DashboardNavbar = (props) => {
         </div>
         </>
     }
-{/* test */}
 
           <IconButton
             onClick={onSidebarOpen}
@@ -145,30 +144,7 @@ export const DashboardNavbar = (props) => {
           >
             <MenuIcon fontSize="small" />
           </IconButton>
-          {/* <Tooltip title="Search" className={`dashboard-navbar-group-btn`}>
-            <IconButton sx={{ ml: 1 }}>
-              <SearchIcon fontSize="medium" />
-              <TextField className={`current_task_field`} id="standard-basic" label="поиск" variant="standard" />
-            </IconButton>
-          </Tooltip> */}
           <Box sx={{ flexGrow: 1 }} />
-          
-          {/* <Tooltip title="Contacts">
-            <IconButton sx={{ ml: 1 }}>
-              <UsersIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Notifications">
-            <IconButton sx={{ ml: 1 }}>
-              <Badge
-                badgeContent={4}
-                color="primary"
-                variant="dot"
-              >
-                <BellIcon fontSize="small" />
-              </Badge>
-            </IconButton>
-          </Tooltip> */}
           <Avatar
             onClick={() => setOpenAccountPopover(true)}
             ref={settingsRef}
@@ -190,6 +166,11 @@ export const DashboardNavbar = (props) => {
         open={openAccountPopover}
         onClose={() => setOpenAccountPopover(false)}
       />
+
+      {loadingProfile &&
+      !secondeLoadProfile &&
+      <div className='loading'><Lottie className='spinner_app' animationData={loadingScreen} /></div>
+      }
     </>
   );
 };

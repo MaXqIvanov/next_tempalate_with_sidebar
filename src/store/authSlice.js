@@ -60,6 +60,8 @@ const authSlice = createSlice({
     loading: false,
     isVisibleProfile: false,
     isChangeProfile: false,
+    loadingProfile: true,
+    secondeLoadProfile: false,
   },
   reducers: {
     logout(state, action) { 
@@ -76,7 +78,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state, action) => {
-        state.loading = true
+        state.loadingProfile = true
     });
     builder.addCase(getProfile.fulfilled, (state,  { payload }) => {
       if(payload.response.status === 401){
@@ -85,10 +87,12 @@ const authSlice = createSlice({
       else{
         state.user = payload.response.data
       }
-      state.loading = false
+      state.loadingProfile = false
+      state.secondeLoadProfile = true
     });
     builder.addCase(getProfile.rejected, (state) => {
-        state.loading = false
+        state.loadingProfile = false
+        state.secondeLoadProfile = true
     });
 
     builder.addCase(userAuth.pending, (state, action) => {
