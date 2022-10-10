@@ -78,7 +78,6 @@ return(
               }}
               placeholder="Поиск пользователя"
               variant="outlined"
-              autoComplete='false'
             />
           </Box>
         </CardContent>
