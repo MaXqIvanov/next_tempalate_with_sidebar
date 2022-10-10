@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { Box, MenuItem, MenuList, Popover, Typography } from '@mui/material';
@@ -7,33 +7,44 @@ import { auth, ENABLE_AUTH } from '../lib/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../scss/MainScreen.module.scss'
 import { logout } from '../store/authSlice';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { changeProfile } from '../store/authSlice';
+// changeProfile
+
 export const AccountPopover = (props) => {
   const dispatch = useDispatch()
   const { anchorEl, onClose, open, ...other } = props;
   const authContext = useContext(AuthContext);
-  const [user_name, setUserName] = useState('Макс Иванов')
+  // const [user_name, setUserName] = useState('Макс Иванов')
   const {user} = useSelector((state)=> state.auth)
   const handleSignOut = async () => {
-    dispathc(logout())
+    dispatch(logout())
     Router
       .push('/sign-in')
       .catch(console.error);
-
-    // try {
-    //   await auth.signOut();
-
-    //   authContext.signOut();
-
-    //   Router
-    //     .push('/sign-in')
-    //     .catch(console.error);
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
+  const [isVisibleSidebar, setIsVisibleSidebarEdit] = useState(false)
+  const [name, setName] = useState('')
+  const [avatar, setAvatar] = useState('')
+  const [email, setEmail] = useState('')
+  const [new_password, setNewPassword] = useState('')
+
+  const saveImage = (img) => {
+    // console.log(img.target.files[0]);
+    setAvatar(img.target.files[0])
+  }
+  useEffect(() => {
+    // setName(`${user.name}`)
+    // setEmail(`${user.email}`)
+    // setAvatar(`${user.avatar}`)
+  }, [isVisibleSidebar])
+  
+
   return (
-    <Popover
+    <>
+     <Popover
       anchorEl={anchorEl}
       anchorOrigin={{
         horizontal: 'left',
@@ -56,8 +67,10 @@ export const AccountPopover = (props) => {
           Аккаунт
         </Typography>
         <Typography
+          onClick={()=> setIsVisibleSidebarEdit(true)}
           color="text.secondary"
           variant="body2"
+          sx={{cursor: 'pointer'}}
         >
           {user.name}
         </Typography>
@@ -80,6 +93,7 @@ export const AccountPopover = (props) => {
         </MenuItem>
       </MenuList>
     </Popover>
+    </>
   );
 };
 

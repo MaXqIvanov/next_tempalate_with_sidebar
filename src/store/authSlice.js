@@ -22,13 +22,28 @@ export const userAuth = createAsyncThunk(
     },
   )
 
+  export const changeProfile = createAsyncThunk(
+    'auth/changeProfile',
+    async (params) => {
+      console.log(params);
+      let data2 = new FormData()
+      data2.append('email', params.email)
+      data2.append('name', params.name)
+      if(params.avatar.size){
+      data2.append('avatar', params.avatar)
+      }
+      const response = await api.post(`backend/api/accounts/profile/change_profile/`,data2)
+      return {response, params}
+    },
+  )
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: {},
     auth: false,
     loading: false,
-    text: 'fadasdasd'
+    isVisibleProfile: true,
   },
   reducers: {
     logout(state, action) { 
@@ -46,7 +61,6 @@ const authSlice = createSlice({
         payload.params.router.push('/sign-in')
       }
       else{
-        console.log(payload);
         state.user = payload.response.data
       }
       state.loading = false
@@ -59,7 +73,6 @@ const authSlice = createSlice({
       state.loading = true
     });
     builder.addCase(userAuth.fulfilled, (state,  { payload }) => {
-      console.log(payload);
         if(payload.response?.status === 403){
           alert(payload.response.data.detail)
         }else{
@@ -72,6 +85,31 @@ const authSlice = createSlice({
         state.loading = false
     });
     builder.addCase(userAuth.rejected, (state) => {
+        state.loading = false
+    });
+
+    builder.addCase(changeProfile.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(changeProfile.fulfilled, (state,  { payload }) => {
+        console.log(payload);
+        if(payload.response.status === 200){
+          alert(payload.response.data.detail)
+        }else{
+          alert('Изменить данные не получилось')
+        }
+        // if(payload.response?.status === 403){
+        //   alert(payload.response.data.detail)
+        // }else{
+        //   Cookies.set('token', payload.response.data.token)
+        //   api.defaults.headers = {
+        //     Authorization: `Bearer ${payload.response.data.token}`
+        //   };
+        //   payload.params.router.push('/')
+        // }
+        state.loading = false
+    });
+    builder.addCase(changeProfile.rejected, (state) => {
         state.loading = false
     });
   },
