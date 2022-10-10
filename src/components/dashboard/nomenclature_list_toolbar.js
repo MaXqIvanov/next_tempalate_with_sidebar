@@ -33,13 +33,14 @@ export const NomenclatureList = (props) => {
   useEffect(() => {
     // if(search_nomenclature.length > 0){
       if(nomenclature_nav === 1){
-        dispatch(getNomenclatureSearch({search: search_nomenclature, page: current_page}))
+        dispatch(getNomenclatureSearch({search: search_nomenclature, page: current_page, ordering: props.ordering}))
       }else{
-        dispatch(getNomenclatureTree({search: search_nomenclature, page: current_page}))
+        dispatch(getNomenclatureTree({search: search_nomenclature, page: current_page, ordering: props.ordering}))
       }
     // }
-  }, [debouncedSearchTerm, change_nomenclature, current_page, nomenclature_nav])
+  }, [debouncedSearchTerm, change_nomenclature, current_page, nomenclature_nav, props.ordering])
   
+
   useEffect(() => {
     setSearchNomenclature('')
     dispatch(setPage(1));

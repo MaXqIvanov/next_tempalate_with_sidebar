@@ -14,7 +14,7 @@ export const getNomenclature = createAsyncThunk(
 export const getNomenclatureSearch = createAsyncThunk(
   'nomenclature/getNomenclatureSearch',
   async (params, {getState}) => {
-    const response = await api(`backend/api/parser/nomenclatures/?search=${params.search}&page=${getState().nomenclature.current_page}`)
+    const response = await api(`backend/api/parser/nomenclatures/?search=${params.search}&page=${getState().nomenclature.current_page}&ordering=${params.ordering}`)
     return {response, params}
   },
 )

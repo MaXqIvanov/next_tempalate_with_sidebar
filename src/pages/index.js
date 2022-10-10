@@ -14,6 +14,17 @@ const Page = () =>{
   const {nomenclature_nav} = useSelector((state)=> state.nomenclature)
   const [isVisibleSidebar, setIsVisibleSidebar] = useState(false)
   const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
+  const [ordering, setOrdering] = useState('code')
+
+  const setOrderingFunc = (value)=> {
+    console.log(value);
+    if(ordering === value.order){
+      setOrdering(`-${ordering}`)
+    }else{
+      setOrdering(value.order)
+    }
+  }
+
   return(
   <>
     <Head>
@@ -30,9 +41,9 @@ const Page = () =>{
       }}
     >
       <Container maxWidth={false}>
-        <NomenclatureList setIsVisibleSidebar={setIsVisibleSidebar}/>
+        <NomenclatureList setIsVisibleSidebar={setIsVisibleSidebar} ordering={ordering}/>
         {nomenclature_nav === 1 ? 
-          <NomenclatureTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>
+          <NomenclatureTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/>
          :<NomenclatureTree setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>}
       </Container>
     </Box>

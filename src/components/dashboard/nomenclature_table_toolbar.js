@@ -34,12 +34,6 @@ function createData(name, code) {
       setRows(nomenclature_all)
     }, [nomenclature_all])
     
-    // useEffect(() => {
-    //   return () => {
-    //     dispatch(setPage(1));
-    //   }
-    // }, [])
-    
 
     const handleChange = (event, value) => {
       dispatch(setPage(value));
@@ -47,13 +41,17 @@ function createData(name, code) {
     const table_header = [
         {
             id: 1,
-            title: 'Артикул'
+            title: 'Артикул',
+            order: 'code'
         },
         {
             id: 2,
-            title: 'Название'
+            title: 'Название',
+            order: 'name',
         }
     ]
+    const [current_table_header, setCurrentTableHeader] = useState(1)
+
     return (
     <Box {...props}>
       <TableContainer component={Paper} className={`custom_table`}>
@@ -61,7 +59,10 @@ function createData(name, code) {
         <TableHead>
           <TableRow>
             {table_header && table_header.map((elem)=> 
-                <TableCell key={elem.id}>{elem.title}</TableCell>)}
+                <TableCell onClick={()=>{
+                  props.setOrderingFunc(elem)
+                  setCurrentTableHeader(elem.id)
+                }} key={elem.id} className={current_table_header === elem.id ? 'choose_header' : 'header_not'} sx={{cursor: 'pointer'}}>{elem.title}</TableCell>)}
           </TableRow>
         </TableHead>
         <TableBody>
