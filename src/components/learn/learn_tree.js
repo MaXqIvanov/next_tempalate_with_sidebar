@@ -49,47 +49,35 @@ function createData(name, calories, fat, carbs, protein) {
     };
 
     const changeName = ({elem, value, value3, elem3})=>{
-      console.log(value);
-      console.log(elem);
-      console.log(value3);
       let btn_two_number = learn_btn_active.split('')
       if(`0${btn_two_number[1]}` === '01'){
         Object.freeze(rows);
         const arrCopy = [...rows]; // 👈️ create copy
         const arrNewUp = [...arrCopy[value].new_uploaded]
-        console.log(arrNewUp);
-        console.log(arrCopy);
         arrNewUp[value3] = {...elem3, key: `${elem}`}
         setElem(elem)
         setValue3(value3)
         arrCopy[value] = {...arrCopy[value], 'new_uploaded' : arrNewUp};
         setRows([...arrCopy])
-        console.log(`standard-basic${elem}${value3}`);
       }else if(`0${btn_two_number[1]}` === '02'){
         Object.freeze(rows);
         const arrCopy = [...rows]; // 👈️ create copy
         const arrNewUp = [...arrCopy[value].already_uploaded]
-        console.log(arrNewUp);
-        console.log(arrCopy);
         arrNewUp[value3] = {...elem3, key: `${elem}`}
         setElem(elem)
         setValue3(value3)
         arrCopy[value] = {...arrCopy[value], 'already_uploaded' : arrNewUp};
         setRows([...arrCopy])
-        console.log(`standard-basic${elem}${value3}`);
       }
       else{
         Object.freeze(rows);
         const arrCopy = [...rows]; // 👈️ create copy
         const arrNewUp = [...arrCopy[value].not_uploaded]
-        console.log(arrNewUp);
-        console.log(arrCopy);
         arrNewUp[value3] = {...elem3, key: `${elem}`}
         setElem(elem)
         setValue3(value3)
         arrCopy[value] = {...arrCopy[value], 'not_uploaded' : arrNewUp};
         setRows([...arrCopy])
-        console.log(`standard-basic${elem}${value3}`);
       }
       }
       
@@ -106,15 +94,11 @@ function createData(name, calories, fat, carbs, protein) {
       const [elem, setElem] = useState('')
       const [value3, setValue3] = useState('')
       const deleteElem = ({value, value3, elem3})=> {
-        console.log(value);
-        console.log(value3);
         let btn_two_number = learn_btn_active.split('')
         if(`0${btn_two_number[1]}` === '01'){
           Object.freeze(rows);
           const arrCopy = [...rows]; // 👈️ create copy
           const arrNewUp = [...arrCopy[value].new_uploaded]
-          console.log(arrNewUp);
-          console.log(arrCopy);
           arrNewUp[value3] = {...elem3, delete: true}
           arrCopy[value] = {...arrCopy[value], 'new_uploaded' : arrNewUp};
           setRows([...arrCopy])
@@ -122,8 +106,6 @@ function createData(name, calories, fat, carbs, protein) {
           Object.freeze(rows);
           const arrCopy = [...rows]; // 👈️ create copy
           const arrNewUp = [...arrCopy[value].already_uploaded]
-          console.log(arrNewUp);
-          console.log(arrCopy);
           arrNewUp[value3] = {...elem3, delete: true}
           arrCopy[value] = {...arrCopy[value], 'already_uploaded' : arrNewUp};
           setRows([...arrCopy])
@@ -132,8 +114,6 @@ function createData(name, calories, fat, carbs, protein) {
           Object.freeze(rows);
           const arrCopy = [...rows]; // 👈️ create copy
           const arrNewUp = [...arrCopy[value].not_uploaded]
-          console.log(arrNewUp);
-          console.log(arrCopy);
           arrNewUp[value3] = {...elem3, delete: true}
           arrCopy[value] = {...arrCopy[value], 'not_uploaded' : arrNewUp};
           setRows([...arrCopy])
@@ -141,15 +121,11 @@ function createData(name, calories, fat, carbs, protein) {
       }
 
       const returnElem = ({value, value3, elem3})=> {
-        console.log(value);
-        console.log(value3);
         let btn_two_number = learn_btn_active.split('')
         if(`0${btn_two_number[1]}` === '01'){
           Object.freeze(rows);
           const arrCopy = [...rows]; // 👈️ create copy
           const arrNewUp = [...arrCopy[value].new_uploaded]
-          console.log(arrNewUp);
-          console.log(arrCopy);
           arrNewUp[value3] = {...elem3, delete: false}
           arrCopy[value] = {...arrCopy[value], 'new_uploaded' : arrNewUp};
           setRows([...arrCopy])
@@ -157,8 +133,6 @@ function createData(name, calories, fat, carbs, protein) {
           Object.freeze(rows);
           const arrCopy = [...rows]; // 👈️ create copy
           const arrNewUp = [...arrCopy[value].already_uploaded]
-          console.log(arrNewUp);
-          console.log(arrCopy);
           arrNewUp[value3] = {...elem3, delete: false}
           arrCopy[value] = {...arrCopy[value], 'already_uploaded' : arrNewUp};
           setRows([...arrCopy])
@@ -167,8 +141,6 @@ function createData(name, calories, fat, carbs, protein) {
           Object.freeze(rows);
           const arrCopy = [...rows]; // 👈️ create copy
           const arrNewUp = [...arrCopy[value].not_uploaded]
-          console.log(arrNewUp);
-          console.log(arrCopy);
           arrNewUp[value3] = {...elem3, delete: false}
           arrCopy[value] = {...arrCopy[value], 'not_uploaded' : arrNewUp};
           setRows([...arrCopy])

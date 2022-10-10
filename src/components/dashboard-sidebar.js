@@ -15,7 +15,7 @@ import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '../store/authSlice';
 
 const items = [
@@ -59,9 +59,10 @@ export const DashboardSidebar = (props) => {
     noSsr: false
   });
   const dispatch = useDispatch()
+  const {isChangeProfile} = useSelector((state)=> state.auth)
   useEffect(() => {
     dispatch(getProfile({router: router}))
-  }, [])
+  }, [isChangeProfile])
 
   const content = (
     <>

@@ -27,12 +27,27 @@ export const userAuth = createAsyncThunk(
     async (params) => {
       console.log(params);
       let data2 = new FormData()
-      data2.append('email', params.email)
-      data2.append('name', params.name)
+      if(params.email.length > 0){
+        data2.append('email', params.email)
+      }
+      if(params.name.length > 0){
+        data2.append('name', params.name)
+      }
       if(params.avatar.size){
       data2.append('avatar', params.avatar)
       }
       const response = await api.post(`backend/api/accounts/profile/change_profile/`,data2)
+      return {response, params}
+    },
+  )
+
+  export const changePassword = createAsyncThunk(
+    'auth/changePassword',
+    async (params) => {
+      console.log(params);
+      const response = await api.post(`backend/api/accounts/profile/change_password/`,{
+        new_password: params.password
+      })
       return {response, params}
     },
   )
@@ -43,7 +58,8 @@ const authSlice = createSlice({
     user: {},
     auth: false,
     loading: false,
-    isVisibleProfile: true,
+    isVisibleProfile: false,
+    isChangeProfile: false,
   },
   reducers: {
     logout(state, action) { 
@@ -53,6 +69,9 @@ const authSlice = createSlice({
     },
     changeIsVisibleProfile(state, action){
       state.isVisibleProfile = !state.isVisibleProfile
+    },
+    isChangeProfile(state,action) {
+      state.changeProfile = !state.changeProfile
     }
   },
   extraReducers: (builder) => {
@@ -97,26 +116,35 @@ const authSlice = createSlice({
     builder.addCase(changeProfile.fulfilled, (state,  { payload }) => {
         console.log(payload);
         if(payload.response.status === 200){
+          state.isChangeProfile = !state.isChangeProfile
           alert(payload.response.data.detail)
         }else{
           alert('Изменить данные не получилось')
         }
-        // if(payload.response?.status === 403){
-        //   alert(payload.response.data.detail)
-        // }else{
-        //   Cookies.set('token', payload.response.data.token)
-        //   api.defaults.headers = {
-        //     Authorization: `Bearer ${payload.response.data.token}`
-        //   };
-        //   payload.params.router.push('/')
-        // }
         state.loading = false
     });
     builder.addCase(changeProfile.rejected, (state) => {
+        state.loading = false
+    });
+
+    builder.addCase(changePassword.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(changePassword.fulfilled, (state,  { payload }) => {
+        console.log(payload);
+        if(payload.response.status === 200){
+          state.isChangeProfile = !state.isChangeProfile
+          alert(payload.response.data.detail)
+        }else{
+          alert('Изменить данные не получилось')
+        }
+        state.loading = false
+    });
+    builder.addCase(changePassword.rejected, (state) => {
         state.loading = false
     });
   },
 });
 
 export default authSlice.reducer;
-export const { logout } = authSlice.actions;
+export const { logout, changeIsVisibleProfile, isChangeProfile } = authSlice.actions;
