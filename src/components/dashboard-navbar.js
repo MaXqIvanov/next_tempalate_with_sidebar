@@ -162,6 +162,7 @@ export const DashboardNavbar = (props) => {
         </Toolbar>
       </DashboardNavbarRoot>
       <AccountPopover
+        setOpenAccountPopover={setOpenAccountPopover}
         anchorEl={settingsRef.current}
         open={openAccountPopover}
         onClose={() => setOpenAccountPopover(false)}

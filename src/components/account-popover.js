@@ -59,11 +59,17 @@ export const AccountPopover = (props) => {
           px: 2
         }}
       >
-        <Typography variant="overline" onClick={()=> dispatch(changeIsVisibleProfile())} sx={{cursor: 'pointer'}}>
+        <Typography variant="overline" onClick={()=> {
+          dispatch(changeIsVisibleProfile())
+          props.setOpenAccountPopover(false)
+          }} sx={{cursor: 'pointer'}}>
           Аккаунт
         </Typography>
         <Typography
-          onClick={()=> dispatch(changeIsVisibleProfile())}
+          onClick={()=> {
+            dispatch(changeIsVisibleProfile())
+            props.setOpenAccountPopover(false)
+          }}
           color="text.secondary"
           variant="body2"
           sx={{cursor: 'pointer'}}
