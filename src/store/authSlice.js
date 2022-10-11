@@ -81,11 +81,16 @@ const authSlice = createSlice({
         state.loadingProfile = true
     });
     builder.addCase(getProfile.fulfilled, (state,  { payload }) => {
-      if(payload.response.status === 401){
-        payload.params.router.push('/sign-in')
-      }
-      else{
-        state.user = payload.response.data
+      try {
+        if(payload.response.status === 401){
+          payload.params.router.push('/sign-in')
+        }
+        else{
+          state.user = payload.response.data
+        } 
+      } catch (error) {
+        state.loadingProfile = false
+        state.secondeLoadProfile = true
       }
       state.loadingProfile = false
       state.secondeLoadProfile = true

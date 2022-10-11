@@ -4,12 +4,18 @@ import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys, deleteNomenclatureTree, editNomenclatureTree, getNomenclatureKeys, setNomenclatureEdit, setNomenclatureKeys } from '../../store/nomenclatureSlice';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
   export const SidebarEdit = (props) => {
     const {nomenclature_edit, nomenclature_keys} = useSelector((state)=> state.nomenclature)
     const [code, setCode] = useState(nomenclature_edit.code)
     const [name, setName] = useState(nomenclature_edit.name)
     const [key_name, setKeyName] = useState('')
+    const [type_key, setTypeKey] = useState('')
     const dispatch = useDispatch()
     const [article_search, setArticleSearch] = useState(nomenclature_keys)
     useEffect(() => {
@@ -30,7 +36,7 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
     Object.freeze(article_search);
 
     const arrCopy = [...article_search]; // 👈️ create copy
-    arrCopy[value] = {id: arrCopy[value].id, string: `${elem}`, nomenclature: arrCopy[value].nomenclature};
+    arrCopy[value] = {id: arrCopy[value].id, string: `${elem}`, nomenclature: arrCopy[value].nomenclature, type: arrCopy[value].type};
       setArticleSearch([...arrCopy])
     }
     const deleteNomenclature = ()=> {
@@ -38,6 +44,19 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
         dispatch(deleteNomenclatureTree({id: nomenclature_edit.id, nav: props.setIsVisibleSidebarEdit}))
       }
     }
+
+    const handleChange = ({event, value}) => {
+      console.log(event);
+      console.log(value);
+
+      // setAge(event.target.value);
+      Object.freeze(article_search);
+
+      const arrCopy = [...article_search]; // 👈️ create copy
+      arrCopy[value] = {id: arrCopy[value].id, string: arrCopy[value].string, nomenclature: arrCopy[value].nomenclature, type: `${event.target.value}`};
+      setArticleSearch([...arrCopy])
+    };
+  
 
     return (
     <>
@@ -57,18 +76,39 @@ import { changeNomenclatureKeys, createNomenclatureKeys, deleteNomenclatureKeys,
         <div className={`nomenclature_detail`}>Параметры поиска</div>
         <div className={`parametr_search_group`}>
           <TextField id="standard-basic" label="" value={key_name} onChange={(e)=> setKeyName(e.target.value)} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-          <div onClick={()=> dispatch(createNomenclatureKeys({id: nomenclature_edit.id, string: key_name}))} className={`btn_save btn_add`}>Добавить +</div>
+          <div onClick={()=> dispatch(createNomenclatureKeys({id: nomenclature_edit.id, string: key_name, type: type_key}))} className={`btn_save btn_add`}>Добавить +</div>
         </div>
-        
+        <select value={type_key} onChange={(e)=> setTypeKey(e.target.value)} className={`select_sidebar_edit_custom_v2`}>
+              <option value={'both'}>оба</option>
+              <option value={'name'}>имя</option>
+              <option value={'code'}>артикул</option>
+        </select>
         <div className={`article_search_block`}>
-
-
           {article_search && article_search.map((elem, index)=>
-          <div className='article_search'>
+          <div key={elem.id} className='article_search'>
               <div className={`article_search_name`}>
                 <TextField id="standard-basic" label="Название" value={elem.string} onChange={(e)=>changeName({elem: e.target.value, value: index})} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
               </div> 
-              <div onClick={()=> dispatch(changeNomenclatureKeys({id: elem.id, nomenclature: nomenclature_edit.id, string: elem.string}))} title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
+              <select value={elem.type} onChange={(e)=> handleChange({event: e, value: index})} className={`select_sidebar_edit_custom`}>
+                <option value={'both'}>оба</option>
+                <option value={'name'}>имя</option>
+                <option value={'code'}>артикул</option>
+              </select>
+              {/* {index === 0 && <FormControl fullWidth>
+                <InputLabel id={`demo-simple-select-label${elem.id}`}>Тип ключа</InputLabel>
+                <Select
+                  labelId={`demo-simple-select-label${elem.id}`}
+                  id={`demo-simple-select${elem.id}`}
+                  value={type_key}
+                  label="Тип ключа"
+                  onChange={handleChangeSelect}
+                >
+                  <MenuItem value={`10${index}`}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl> } */}
+              <div onClick={()=> dispatch(changeNomenclatureKeys({id: elem.id, nomenclature: nomenclature_edit.id, string: elem.string, type: elem.type}))} title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
               <div onClick={()=> dispatch(deleteNomenclatureKeys({id: elem.id}))} title={`Удалить изменения`} className={`article_search_btn_change`}></div>
           </div>)}
         </div>

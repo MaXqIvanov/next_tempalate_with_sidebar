@@ -32,7 +32,7 @@ export const editNomenclatureTree = createAsyncThunk(
   async (params) => {
     const response = await api.put(`backend/api/parser/nomenclatures/${params.id}/`,{
       code: params.code,
-      name: params.name
+      name: params.name,
     })
     return {response, params}
   },
@@ -70,7 +70,8 @@ export const changeNomenclatureKeys = createAsyncThunk(
   async (params) => {
     const response = await api.put(`backend/api/parser/keys/${params.id}/`,{
       nomenclature: params.nomenclature,
-      string: params.string
+      string: params.string,
+      type: params.type
     })
     return {response, params}
   },
@@ -89,7 +90,8 @@ export const createNomenclatureKeys = createAsyncThunk(
   async (params) => {
     const response = await api.post(`backend/api/parser/keys/`,{
       nomenclature: params.id,
-      string: params.string
+      string: params.string,
+      type: params.type
     })
     return {response, params}
   },
