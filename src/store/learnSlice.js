@@ -45,9 +45,14 @@ const learnSlice = createSlice({
         state.loading = true
     });
     builder.addCase(getLearn.fulfilled, (state,  { payload }) => {
+      console.log(payload);
       if(payload.response.status === 200){
         // state.count_page = Math.round(payload.response.data.count / 30)
         state.learn_all = payload.response.data
+      }else{
+        if(payload.response.data.detail){
+          alert(payload.response.data.detail)
+        }
       }
       state.loading = false
     });
