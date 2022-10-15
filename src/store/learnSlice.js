@@ -16,7 +16,6 @@ export const getLearn = createAsyncThunk(
 export const sendLearn = createAsyncThunk(
     'learn/sendLearn',
     async (params, {getState}) => {
-    //   let new_params = [{...params[0]},{...params[1]}]
       const response = await api.post(`backend/api/parser/system_learning/`, params)
       return {response, params}
     },
@@ -65,7 +64,6 @@ const learnSlice = createSlice({
     });
     builder.addCase(sendLearn.fulfilled, (state,  { payload }) => {
       if(payload.response.status === 200){
-        // state.count_page = Math.round(payload.response.data.count / 30)
         alert(payload.response.data.detail)
         state.learn_all = []
       }else{

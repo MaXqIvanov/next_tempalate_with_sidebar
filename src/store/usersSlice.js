@@ -163,13 +163,6 @@ const usersSlice = createSlice({
       }else{
         alert(payload.response.data.detail)
       }
-      // if(payload.response.status === 204){
-      //   state.change_info_user = !state.change_info_user
-      //   payload.params.isSidebar(false)
-      //   alert('Пользователь успешно удалён')
-      // }else{
-      //   alert('Удалить не получилось')
-      // }
       state.loading = false
     });
     builder.addCase(changePassword.rejected, (state) => {
