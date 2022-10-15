@@ -1,1 +1,1 @@
-Next.js admin panel
+Next.js admin panel width ui maretial UI
