@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 
  const api = axios.create({
-    baseURL : "http://45.82.68.151:8009/",
+    baseURL : "http://localhost:3000/",
     headers : {
         'Authorization': Cookies.get('token') ? "Bearer " + Cookies.get('token') : '',
     }

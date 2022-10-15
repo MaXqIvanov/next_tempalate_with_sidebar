@@ -107,7 +107,7 @@ const authSlice = createSlice({
         if(payload.response?.status === 403){
           alert(payload.response.data.detail)
         }else{
-          Cookies.set('token', payload.response.data.token)
+          Cookies.set('token', payload.response.data.token, { expires: 90 })
           api.defaults.headers = {
             Authorization: `Bearer ${payload.response.data.token}`
           };
