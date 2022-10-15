@@ -1,1 +1,2 @@
-Next.js admin panel width ui maretial UI
+Next.js admin panel width maretial UI
+cropped version without backend api
