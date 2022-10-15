@@ -17,7 +17,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNomenclature, setNomenclatureEdit, setPage } from '../../store/nomenclatureSlice';
 
 function createData(name, code) {
     return { code, name };
@@ -27,17 +26,12 @@ function createData(name, code) {
   export const NomenclatureTable = (props) => {
     // const [page, setPage] = useState(1);
     const [rows, setRows] = useState([]);
-    const {nomenclature_all, count_page, change_nomenclature , current_page} = useSelector((state)=> state.nomenclature)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-      setRows(nomenclature_all)
-    }, [nomenclature_all])
-    
+    const handleChange = ()=>{
+      console.log('Смена страницы');
+    }
 
-    const handleChange = (event, value) => {
-      dispatch(setPage(value));
-    };
     const table_header = [
         {
             id: 1,
@@ -71,16 +65,10 @@ function createData(name, code) {
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 }, cursor: 'pointer' }}
             >
-              <TableCell onClick={()=>{
-                props.setIsVisibleSidebarEdit(true)
-                dispatch(setNomenclatureEdit(row))
-              }} component="th" scope="row">
+              <TableCell component="th" scope="row">
                 {row.code}
               </TableCell>
-              <TableCell onClick={()=>{
-                props.setIsVisibleSidebarEdit(true)
-                dispatch(setNomenclatureEdit(row))
-              }}>{row.name}</TableCell>
+              <TableCell>{row.name}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -96,9 +84,9 @@ function createData(name, code) {
         >
           <Pagination
             color="primary"
-            count={count_page}
+            count={1}
             size="small"
-            page={current_page}
+            page={1}
             onChange={handleChange}
           />
     </Box>

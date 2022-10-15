@@ -1,45 +1,28 @@
-import styles from '../../scss/MainScreen.module.scss';
 import TextField from '@mui/material/TextField';
 import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNomenclatureTree, deleteNomenclatureTree, createNomenclatureKeys, setNomenclatureEdit, changeNomenclatureKeys, deleteNomenclatureKeys, setNomenclatureKeys } from '../../store/nomenclatureSlice';
-
   export const SidebarCreate = (props) => {
     const [code, setCode] = useState('')
     const [name, setName] = useState('')
     const dispatch = useDispatch()
     const [key_name, setKeyName] = useState('')
-    const {nomenclature_edit, nomenclature_keys} = useSelector((state)=> state.nomenclature)
+    // const {nomenclature_edit, nomenclature_keys} = useSelector((state)=> state.nomenclature)
     const [article_search, setArticleSearch] = useState([])
     const [type_key, setTypeKey] = useState('both')
 
     const changeName = ({elem, value})=>{
       Object.freeze(article_search);
-      const arrCopy = [...article_search]; // 👈️ create copy
+      const arrCopy = [...article_search];
       arrCopy[value] = {id: arrCopy[value].id, string: `${elem}`, nomenclature: arrCopy[value].nomenclature};
       setArticleSearch([...arrCopy])
       }
 
-    // useEffect(() => {
-    //   return () => {
-    //     dispatch(setNomenclatureEdit(''))
-    //     dispatch(setNomenclatureKeys(''))
-    //   }
-    // }, [])
-
-    useEffect(() => {
-      setArticleSearch(nomenclature_keys)
-  }, [nomenclature_keys])
 
   const handleChange = ({event, value}) => {
-    console.log(event);
-    console.log(value);
-
-    // setAge(event.target.value);
     Object.freeze(article_search);
 
-    const arrCopy = [...article_search]; // 👈️ create copy
+    const arrCopy = [...article_search];
     arrCopy[value] = {id: arrCopy[value].id, string: arrCopy[value].string, nomenclature: arrCopy[value].nomenclature, type: `${event.target.value}`};
     setArticleSearch([...arrCopy])
   };
@@ -54,8 +37,8 @@ import { createNomenclatureTree, deleteNomenclatureTree, createNomenclatureKeys,
         <div className={`btn_group`}>
           <div className={`btn_group_wrapper`}>
             <div onClick={()=> props.setIsVisibleSidebar(false)} className={`btn_cancel`}><span>Отмена</span></div>
-            <div onClick={()=> dispatch(deleteNomenclatureTree({id: nomenclature_edit.id, nav: props.setIsVisibleSidebar}))} className={`btn_delete`}><span>Удалить</span></div>
-            <div onClick={()=> dispatch(createNomenclatureTree({name: name, code: code}))} className={`btn_save`}><span>Сохранить</span></div>
+            {/* <div onClick={()=> dispatch(deleteNomenclatureTree({id: nomenclature_edit.id, nav: props.setIsVisibleSidebar}))} className={`btn_delete`}><span>Удалить</span></div> */}
+            {/* <div onClick={()=> dispatch(createNomenclatureTree({name: name, code: code}))} className={`btn_save`}><span>Сохранить</span></div> */}
           </div>
         </div>
 
@@ -81,8 +64,8 @@ import { createNomenclatureTree, deleteNomenclatureTree, createNomenclatureKeys,
                 <option value={'name'}>имя</option>
                 <option value={'code'}>артикул</option>
               </select>
-              <div onClick={()=> dispatch(changeNomenclatureKeys({id: elem.id, nomenclature: nomenclature_edit.id, string: elem.string, type: elem.type}))} title={`Сохранить изменения`} className={`article_search_btn_save`}></div>
-              <div onClick={()=> dispatch(deleteNomenclatureKeys({id: elem.id}))} title={`Удалить изменения`} className={`article_search_btn_change`}></div>
+              {/* <div onClick={()=> dispatch(changeNomenclatureKeys({id: elem.id, nomenclature: nomenclature_edit.id, string: elem.string, type: elem.type}))} title={`Сохранить изменения`} className={`article_search_btn_save`}></div> */}
+              {/* <div onClick={()=> dispatch(deleteNomenclatureKeys({id: elem.id}))} title={`Удалить изменения`} className={`article_search_btn_change`}></div> */}
           </div>)}
         </div>
         {/* <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div> */}

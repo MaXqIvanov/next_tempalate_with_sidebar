@@ -13,7 +13,6 @@ import {
   import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
   import ChevronRightIcon from '@mui/icons-material/ChevronRight';
   import TreeItem from '@mui/lab/TreeItem';
-import { getNomenclatureTree, setPage } from '../../store/nomenclatureSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 function createData(name, calories, fat, carbs, protein) {
@@ -32,9 +31,6 @@ function createData(name, calories, fat, carbs, protein) {
     //   }
     // }, [])
 
-    const handleChange = (event, value) => {
-      dispatch(setPage(value));
-    };
     return (
         <Box {...props} className={`custom_box`}>
         <TreeView

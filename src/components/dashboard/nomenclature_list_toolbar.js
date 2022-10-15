@@ -12,7 +12,6 @@ import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 import { useDispatch, useSelector } from 'react-redux';
-import {changeNomenclature, getNomenclatureSearch, getNomenclatureTree, setPage} from '../../store/nomenclatureSlice';
 import useDebounce from '../../hooks/use-debounce';
 
 export const NomenclatureList = (props) => {
@@ -27,28 +26,10 @@ export const NomenclatureList = (props) => {
       title: 'Дерево'
     }
   ]
-  const {nomenclature_nav, current_page, change_nomenclature} = useSelector((state)=> state.nomenclature)
   const [search_nomenclature, setSearchNomenclature] = useState('')
   const debouncedSearchTerm = useDebounce(search_nomenclature, 300);
-  useEffect(() => {
-    // if(search_nomenclature.length > 0){
-      if(nomenclature_nav === 1){
-        dispatch(getNomenclatureSearch({search: search_nomenclature, page: current_page, ordering: props.ordering}))
-      }else{
-        dispatch(getNomenclatureTree({search: search_nomenclature, page: current_page, ordering: props.ordering}))
-      }
-    // }
-  }, [debouncedSearchTerm, change_nomenclature, current_page, nomenclature_nav, props.ordering])
   
 
-  useEffect(() => {
-    setSearchNomenclature('')
-    dispatch(setPage(1));
-  }, [nomenclature_nav])
-
-  useEffect(() => {
-    dispatch(setPage(1));
-  }, [debouncedSearchTerm])
   
   
   return (
@@ -69,22 +50,11 @@ export const NomenclatureList = (props) => {
         Номенклатура
       </Typography>
       <Box sx={{ m: 1 }}>
-        {nav_elem && nav_elem.map((elem)=>
-                <Button
-                onClick={()=> dispatch(changeNomenclature(elem.id))}
-                key={elem.TextField}
-                sx={{m: 1}}
-                color={`${elem.id === nomenclature_nav ? 'secondary' : 'primary'}`}
-                variant="contained"
-              >
-                {elem.title}
-              </Button>
-        )}
+
         <Button
           sx={{m: 1}}
           color="primary"
           variant="contained"
-          onClick={()=> props.setIsVisibleSidebar(true)}
         >
           Добавить+
         </Button>
@@ -96,7 +66,6 @@ export const NomenclatureList = (props) => {
           <Box sx={{ maxWidth: 500 }}>
             <TextField
               autoComplete='off'
-              onChange={(e)=> setSearchNomenclature(e.target.value)}
               value={search_nomenclature}
               fullWidth
               InputProps={{

@@ -7,11 +7,9 @@ import { useSelector } from 'react-redux';
 import { NomenclatureTree } from '../components/dashboard/nomenclature_tree';
 import {useState} from 'react'
 import { SidebarCreate } from '../components/dashboard/sidebarCreate';
-import styles from '../scss/MainScreen.module.scss';
 import { SidebarEdit } from '../components/dashboard/sidebarEdit';
 
 const Page = () =>{
-  const {nomenclature_nav} = useSelector((state)=> state.nomenclature)
   const [isVisibleSidebar, setIsVisibleSidebar] = useState(false)
   const [isVisibleSidebarEdit, setIsVisibleSidebarEdit] = useState(false)
   const [ordering, setOrdering] = useState('code')
@@ -42,9 +40,7 @@ const Page = () =>{
     >
       <Container maxWidth={false}>
         <NomenclatureList setIsVisibleSidebar={setIsVisibleSidebar} ordering={ordering}/>
-        {nomenclature_nav === 1 ? 
           <NomenclatureTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/>
-         :<NomenclatureTree setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/>}
       </Container>
     </Box>
     {isVisibleSidebar && <SidebarCreate setIsVisibleSidebar={setIsVisibleSidebar}/>}

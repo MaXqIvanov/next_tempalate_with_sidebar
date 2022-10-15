@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
-import { CustomerListResults } from '../components/history_request/history_request-list-results';
-import { HistoryRequestListToolbar } from '../components/history_request/history_request-list-toolbar';
+// import { CustomerListResults } from '../components/history_request/history_request-list-results';
+// import { HistoryRequestListToolbar } from '../components/history_request/history_request-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { HistoryRequestTable } from '../components/history_request/history_request_table';
-import { SidebarEdit } from '../components/history_request/sidebarEdit';
+// import { HistoryRequestTable } from '../components/history_request/history_request_table';
 import {useState} from 'react'
 
 const Page = () => {
@@ -36,16 +35,15 @@ return (
       }}
     >
       <Container maxWidth={false}>
-        <HistoryRequestListToolbar ordering={ordering}/>
+        {/* <HistoryRequestListToolbar ordering={ordering}/> */}
         <Box sx={{ mt: 3 }}>
-          <CustomerListResults />
+          {/* <CustomerListResults /> */}
         </Box>
         <Box sx={{ mt: 3 }}>
-          <HistoryRequestTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/>
+          {/* <HistoryRequestTable setIsVisibleSidebarEdit={setIsVisibleSidebarEdit} setOrderingFunc={setOrderingFunc}/> */}
         </Box>
       </Container>
     </Box>
-    {isVisibleSidebarEdit && <SidebarEdit setIsVisibleSidebarEdit={setIsVisibleSidebarEdit}/> }
   </>
 )};
 
