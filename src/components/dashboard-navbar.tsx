@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import loadingScreen from '../icons/preload.json';
 import Lottie from 'lottie-react';
 
-const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
+const DashboardNavbarRoot = styled(AppBar)(({ theme }:any) => ({
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.shadows[3]
 }));
@@ -24,7 +24,7 @@ export const DashboardNavbar = (props) => {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false)
   const { onSidebarOpen, ...other } = props;
   const settingsRef = useRef(null);
-  const [openAccountPopover, setOpenAccountPopover] = useState(false);
+  const [openAccountPopover, setOpenAccountPopover] = useState<boolean>(false);
   const [avatar, setFile] = useState('')
   const [errors,setErrors] = useState('')
 
@@ -41,7 +41,6 @@ export const DashboardNavbar = (props) => {
       setErrors('Пароли не совпадают')
     }else{
       setErrors('')
-      dispatch(changePassword({password: password, isVisiblePassword: setIsVisiblePassword})) 
     }
   }
 
