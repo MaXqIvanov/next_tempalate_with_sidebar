@@ -27,7 +27,7 @@ const Page = () =>{
   <>
     <Head>
       <title>
-        ASIST | Номенклатура
+        Сайт | Номенклатура
       </title>
     </Head>
     <Box

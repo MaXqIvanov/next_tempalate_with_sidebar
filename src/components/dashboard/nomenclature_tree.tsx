@@ -20,9 +20,7 @@ function createData(name, calories, fat, carbs, protein) {
   }
   
   export const NomenclatureTree = (props) => {
-    // const [page, setPage] = useState(1);
     const [rows, setRows] = useState([]);
-    const {nomenclature_tree, count_page, current_page} = useSelector((state)=> state.nomenclature)
 
     const dispatch = useDispatch()
     // useEffect(() => {
@@ -40,14 +38,6 @@ function createData(name, calories, fat, carbs, protein) {
         defaultExpandIcon={<ChevronRightIcon />}
         sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
         >
-        {nomenclature_tree && nomenclature_tree.map((elem)=>
-        <TreeItem nodeId={elem.id} key={elem.id} label={`"${elem.code}"  /  ${elem.name}`}>
-          {elem.keys && elem.keys.map((elem2, index)=>
-           <div className={`nomenclature_tree_key`} key={`${elem.id}${index}`}>{elem2}</div>
-           )}
-        </TreeItem>)}
-
-
         {/* <TreeItem nodeId="1" label="Applications">
             <TreeItem nodeId="2" label="Calendar" />
         </TreeItem>
@@ -64,10 +54,10 @@ function createData(name, calories, fat, carbs, protein) {
         >
           <Pagination
             color="primary"
-            count={count_page}
+            count={1}
             size="small"
-            page={current_page}
-            onChange={handleChange}
+            page={1}
+            // onChange={handleChange}
           />
         </Box>
     </Box>

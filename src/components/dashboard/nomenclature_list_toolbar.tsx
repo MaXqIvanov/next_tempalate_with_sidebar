@@ -26,7 +26,7 @@ export const NomenclatureList = (props) => {
       title: 'Дерево'
     }
   ]
-  const [search_nomenclature, setSearchNomenclature] = useState('')
+  const [search_nomenclature, setSearchNomenclature] = useState<string>('')
   const debouncedSearchTerm = useDebounce(search_nomenclature, 300);
   
 

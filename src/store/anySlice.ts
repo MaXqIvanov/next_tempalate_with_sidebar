@@ -5,7 +5,7 @@ import { HeadersDefaults } from 'axios';
 
 export const anyAsyncThynk = createAsyncThunk(
   'anySlice/anyAsyncThynk',
-  async (params, {getState}) => {
+  async (params:any, {getState}:any) => {
     console.log(params);
     const response = await api.get(`backend/api/accounts/users/?search=${params.search}&page=${getState().users.current_page}&ordering=${params.ordering}`)
     return {response, params}
@@ -15,22 +15,23 @@ export const anyAsyncThynk = createAsyncThunk(
 const anySlice = createSlice({
   name: 'anySlice',
   initialState: {
-    any_variable: [],
+    loading: false,
+    current_page: 1
   },
   reducers: {
     anyReducer(state, action) {
       console.log(action.payload);
-      state.choose_user = action.payload
+      // state.choose_user = action.payload
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(anyAsyncThynk.pending, (state, action) => {
+    builder.addCase(anyAsyncThynk.pending, (state: anySlice, action) => {
         state.loading = true
     });
-    builder.addCase(anyAsyncThynk.fulfilled, (state,  { payload }) => {
+    builder.addCase(anyAsyncThynk.fulfilled, (state: anySlice,  { payload }) => {
       state.loading = false
     });
-    builder.addCase(anyAsyncThynk.rejected, (state) => {
+    builder.addCase(anyAsyncThynk.rejected, (state: anySlice) => {
         state.loading = false
     });
   },
@@ -38,3 +39,8 @@ const anySlice = createSlice({
 
 export default anySlice.reducer;
 export const { anyReducer } = anySlice.actions;
+
+export type anySlice = {
+  loading: boolean,
+  current_page: number
+}

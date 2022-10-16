@@ -9,7 +9,6 @@ import { Logo } from '../../components/logo';
 import { useAuthContext } from '../../contexts/auth-context';
 import Router from 'next/router';
 import { useDispatch } from 'react-redux';
-import { userAuth } from '../../store/authSlice';
 import {useRouter}  from 'next/router';
 
 const Page = () => {
@@ -20,10 +19,11 @@ const Page = () => {
   const [password, setPassword] = useState('');
   const router = useRouter()
 
-  const authContext = useAuthContext();
+  const authContext:any = useAuthContext();
 
-  const onSubmit = async (values, helpers) => {
-    dispatch(userAuth({password: password, username: username, router: router}))
+  const onSubmit = async () => {
+    // func send data
+    router.push('/')
   }
 
   const handleTabChange = (event, value) => {

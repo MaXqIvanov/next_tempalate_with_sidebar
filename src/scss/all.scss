@@ -11,3 +11,21 @@
     border-radius: 20px; /* закругления плашки */
     border: 3px solid #b3e3fb;  /* padding вокруг плашки */
   }
+  .logo_title{
+    color: white;
+    margin-left: 15px;
+    font-size: xx-large;
+    display: flex;
+    flex-direction: column;
+    span{
+        font-size: small;
+    }
+}
+.logo_main{
+  display: flex;
+  text-decoration: none;
+  svg{
+      height: 70px;
+      width: 70px;
+  }
+}

@@ -41,7 +41,7 @@ const App = (props) => {
             <AuthProvider>
               <AuthConsumer>
                 {
-                  (auth) => auth.isLoading
+                  (auth:any) => auth.isLoading
                     ? <Fragment />
                     : getLayout(<Component {...pageProps} />)
                 }

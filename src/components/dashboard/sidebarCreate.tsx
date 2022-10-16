@@ -2,6 +2,10 @@ import TextField from '@mui/material/TextField';
 import {useState, useEffect} from 'react'
 import delete_img from '../../icons/nomenclature/delete_img.svg';
 import { useDispatch, useSelector } from 'react-redux';
+
+
+
+
   export const SidebarCreate = (props) => {
     const [code, setCode] = useState('')
     const [name, setName] = useState('')
@@ -45,7 +49,7 @@ import { useDispatch, useSelector } from 'react-redux';
         <div className={`nomenclature_detail`}>Параметры поиска</div>
         <div className={`parametr_search_group`}>
           <TextField id="standard-basic" label="" value={key_name} onChange={(e)=> setKeyName(e.target.value)} variant="standard" sx={{mt: 1}} className={`custom_nomenclature_input`}/>
-          <div onClick={()=> dispatch(createNomenclatureKeys({id: nomenclature_edit.id, string: key_name, type: type_key}))} className={`btn_save btn_add`}>Добавить +</div>
+          <div className={`btn_save btn_add`}>Добавить +</div>
         </div>
         <select value={type_key} onChange={(e)=> setTypeKey(e.target.value)} className={`select_sidebar_edit_custom_v2`}>
               <option value={'both'}>оба</option>
@@ -70,11 +74,7 @@ import { useDispatch, useSelector } from 'react-redux';
         </div>
         {/* <div className={`btn_wrapper`}><div className={`btn_save_change`}>Сохранить изменения</div></div> */}
     </div>
-      <div onClick={()=> {
-        props.setIsVisibleSidebar(false)
-        dispatch(setNomenclatureEdit(''))
-        dispatch(setNomenclatureKeys(''))
-      }} className={`custom_zagl`}>
+      <div className={`custom_zagl`}>
     </div>
     </>
   )};

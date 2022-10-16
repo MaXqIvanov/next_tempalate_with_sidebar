@@ -20,9 +20,6 @@ export const AccountPopover = (props) => {
       .catch(console.error);
   };
 
-  const saveImage = (img) => {
-    setAvatar(img.target.files[0])
-  }
   
 
   return (
@@ -46,22 +43,15 @@ export const AccountPopover = (props) => {
           px: 2
         }}
       >
-        <Typography variant="overline" onClick={()=> {
-          dispatch(changeIsVisibleProfile())
-          props.setOpenAccountPopover(false)
-          }} sx={{cursor: 'pointer'}}>
+        <Typography variant="overline" sx={{cursor: 'pointer'}}>
           Аккаунт
         </Typography>
         <Typography
-          onClick={()=> {
-            dispatch(changeIsVisibleProfile())
-            props.setOpenAccountPopover(false)
-          }}
           color="text.secondary"
           variant="body2"
           sx={{cursor: 'pointer'}}
         >
-          {/* name */}
+          any_name_user
         </Typography>
       </Box>
       <MenuList
